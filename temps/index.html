@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2048 - Ymmerssion</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/game.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <table align="center">
+        <tbody>
+        <tr>
+            <td id="game-container">
+                <div class="container2048">
+                    <div class="left">
+                        <div class="heading">
+                            <h1 class="title">2048</h1>
+                            <div class="scores-container2048">
+                                <div class="score-container2048">36
+                                    <div class="score-addition">+36</div>
+                                </div>
+                                <div class="best-container2048">36</div>
+                                <div class="restart-button"></div>
+                            </div>
+                        </div>
+                        <div class="game-container2048">
+                            <div class="game-message">
+                                <p></p>
+                                <div class="lower">
+                                    <a class="keep-playing-button">Continuer</a>
+                                    <a class="retry-button">Recommencer</a>
+                                </div>
+                            </div>
+                            <div class="grid-container2048">
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                            </div>
+                            <div class="tile-container2048">
+                                <div class="tile tile-2 tile-position-1-2 tile-new">
+                                    <div class="tile-inner">2</div>
+                                </div>
+                                <div class="tile tile-8 tile-position-1-3 tile-new">
+                                    <div class="tile-inner">8</div>
+                                </div>
+                                <div class="tile tile-4 tile-position-1-4 tile-new">
+                                    <div class="tile-inner">4</div>
+                                </div>
+                                <div class="tile tile-8 tile-position-2-4 tile-new">
+                                    <div class="tile-inner">8</div>
+                                </div>
+                                <div class="tile tile-4 tile-position-3-2 tile-new">
+                                    <div class="tile-inner">4</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="game-list" valign="center">
+                <div>
+                    <div style="font-weight:bold; padding-bottom: 10px">VARIATIONS</div>
+                    <a href="2048x5" target="_parent">
+                        <div class="game-item tile4">
+                            <img class="left" src="//jeu2048.fr/icon/2048x5.png">
+                            <div class="right">2048 Chrono</div>
+                        </div>
+                    </a><a href="2048x8" target="_parent">
+                    <div class="game-item tile8">
+                        <img class="left" src="//jeu2048.fr/icon/2048x8.png">
+                        <div class="right">2048 Element</div>
+                    </div>
+                </a><a href="2048-4d" target="_parent">
+                    <div class="game-item tile16">
+                        <img class="left" src="//jeu2048.fr/icon/2048-4d.png">
+                        <div class="right">2048 Reverse</div>
+                    </div>
+                </a></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
