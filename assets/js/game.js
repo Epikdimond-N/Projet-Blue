@@ -1,46 +1,52 @@
 //Class du jeu
+//return [...Array(4)].map((_, x) => Array(4).fill(null).map((_, y) => new Tiles(x, y)));
 
 import {Tiles} from "./tiles.js";
 import {Elements} from "./elements.js";
 
-export class Game{
+export class Game {
 
-    constructor(mode = "normal", time = null){
+    constructor(mode = "normal", time = null) {
         this.Score = 0;
         this.Mode = mode;
         this.Grid = this.CreateGrill()
-        this.RandomTiles();
-        this.RandomTiles();
         this.Time = time;
     }
 
     CreateGrill() {
-        return [...Array(4)].map((_, x) => Array(4).fill(null).map((_, y) => new Tiles(x, y)));
+        const grille = [
+            [new Tiles(0, 0, 0), new Tiles(0, 1, 4), new Tiles(0, 2, 4), new Tiles(0, 3, 0)],
+            [new Tiles(1, 0), new Tiles(1, 1), new Tiles(1, 2), new Tiles(1, 3)],
+            [new Tiles(2, 0), new Tiles(2, 1), new Tiles(2, 2), new Tiles(2, 3)],
+            [new Tiles(3, 0), new Tiles(3, 1), new Tiles(3, 2), new Tiles(3, 3, 9)]]
+        return grille;
+
     }
 
-    RandomTiles(){
+    RandomTiles() {
+        console.log("RandomTiles")
         let x = Math.floor(Math.random() * 4);
         let y = Math.floor(Math.random() * 4);
-        console.log(x,y);
-        if(this.Mode === "element"){
+        console.log(x, y);
+        if (this.Mode === "element") {
             console.log("element")
             this.Grid[x][y].value === 0 ? this.Grid[x][y].value = (Math.random() < 0.17) ? 4 : 2 : this.RandomTiles();
             if (Math.random() <= 0.02) {
                 this.Grid[x][y].element(new Elements("fire"));
-            }else if(Math.random() <= 0.04) {
+            } else if (Math.random() <= 0.04) {
                 this.Grid[x][y].element(new Elements("water"));
-            }else if(Math.random() <= 0.06){
+            } else if (Math.random() <= 0.06) {
                 this.Grid[x][y].element(new Elements("earth"));
-            }else if(Math.random() <= 0.08){
+            } else if (Math.random() <= 0.08) {
                 this.Grid[x][y].element(new Elements("air"));
             }
-        }else if(this.Mode === "reverse"){
+        } else if (this.Mode === "reverse") {
             console.log("reverse")
             this.Grid[x][y].value === 0 ? this.Grid[x][y].value = (Math.random() < 0.17) ? 65536 : 131072 : this.RandomTiles();
-        }else{
-            if (this.Grid[x][y].value === 0){
+        } else {
+            if (this.Grid[x][y].value === 0) {
                 this.Grid[x][y].value = (Math.random() < 0.17) ? 4 : 2;
-            }else{
+            } else {
                 this.RandomTiles()
             }
         }
@@ -71,34 +77,72 @@ export class Game{
         return moved
     }
 
-    SetScore(score){
+    SetScore(score) {
         this.Score = score;
     }
 
-    SetMode(mode){
+    SetMode(mode) {
         this.Mode = mode;
     }
 
-    SetTime(time){
+    SetTime(time) {
         this.Time = time;
     }
 
-    moveUp(){
-        console.log(this.Grid)
-        return false
-    }
-
-    moveDown(){
+    moveUp() {
 
     }
 
-    moveLeft(){
+    moveDown() {
 
     }
 
-    moveRight(){
+    moveLeft() {
+        let check = false;
+
+        for (let x = 0; x < this.Grid.length; x++) {
+            let newRow = this.Grid[x].filter(tile => tile.value !== 0);
+            for (let i = 0; i < newRow.length - 1; i++) {
+                if (newRow[i].value === newRow[i + 1].value) {
+                    newRow[i].value *= 2;
+                    newRow[i + 1].value = 0;
+                    check = true;
+                }
+            }
+            newRow = newRow.filter(tile => tile.value !== 0);
+            while (newRow.length < this.Grid.length) {
+                newRow.push(new Tiles(x, 0));
+            }
+            this.Grid[x] = newRow;
+        }
+
+        return check;
+
 
     }
+
+    moveRight() {
+        let check = false;
+
+        for (let x = 0; x < this.Grid.length; x++) {
+            let newRow = this.Grid[x].filter(tile => tile.value !== 0);
+            for (let i = newRow.length - 1; i > 0; i--) {
+                if (newRow[i].value === newRow[i - 1].value) {
+                    newRow[i].value *= 2;
+                    newRow[i - 1].value = 0;
+                    check = true;
+                }
+            }
+            newRow = newRow.filter(tile => tile.value !== 0);
+            while (newRow.length < this.Grid.length) {
+                newRow.unshift(new Tiles(x, 0));
+            }
+            this.Grid[x] = newRow;
+        }
+
+        return check;
+    }
+
 
 }
 
