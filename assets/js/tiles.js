@@ -13,6 +13,10 @@ class Tiles{
     }
 
     UsePower(){
-        this.element.UsePower()
+        try {
+            this.element.UsePower()
+        }catch (e){
+            console.log(e)
+        }
     }
 }

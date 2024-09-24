@@ -6,6 +6,8 @@ class Game{
         this.Score = 0;
         this.Mode = mode;
         this.Grill = this.CreateGrill()
+        this.RandomTiles();
+        this.RandomTiles();
         this.Time = time;
     }
 
@@ -34,8 +36,27 @@ class Game{
         }
     }
 
-    Move(direction){
+    move(direction) {
+        let moved = false;
 
+        switch (direction) {
+            case 'up':
+                moved = this.moveUp();
+                break;
+            case 'down':
+                moved = this.moveDown();
+                break;
+            case 'left':
+                moved = this.moveLeft();
+                break;
+            case 'right':
+                moved = this.moveRight();
+                break;
+        }
+
+        if (moved) {
+            this.RandomTiles();
+        }
     }
 
     SetScore(score){
@@ -48,5 +69,21 @@ class Game{
 
     SetTime(time){
         this.Time = time;
+    }
+
+    moveUp(){
+
+    }
+
+    moveDown(){
+
+    }
+
+    moveLeft(){
+
+    }
+
+    moveRight(){
+
     }
 }
