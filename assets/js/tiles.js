@@ -1,15 +1,11 @@
-class Tiles{
-    constructor(type = null, value = 0){
+import {Elements} from "./elements.js";
+
+export class Tiles{
+    constructor(x, y,type = null, value = 0){
         this.element = new Elements(type);
         this.value = value
-    }
-
-    SetElement(element){
-        this.element = element;
-    }
-
-    SetValue(value){
-        this.value = value;
+        this.x = x
+        this.y = y
     }
 
     UsePower(){

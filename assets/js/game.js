@@ -1,38 +1,48 @@
 //Class du jeu
 
-class Game{
+import {Tiles} from "./tiles.js";
+import {Elements} from "./elements.js";
+
+export class Game{
 
     constructor(mode = "normal", time = null){
         this.Score = 0;
         this.Mode = mode;
-        this.Grill = this.CreateGrill()
+        this.Grid = this.CreateGrill()
         this.RandomTiles();
         this.RandomTiles();
         this.Time = time;
     }
 
-    CreateGrill(){
-        return [...Array(4)].map(() => Array(4).fill(new Tiles()));
+    CreateGrill() {
+        return [...Array(4)].map((_, x) => Array(4).fill(null).map((_, y) => new Tiles(x, y)));
     }
 
     RandomTiles(){
         let x = Math.floor(Math.random() * 4);
         let y = Math.floor(Math.random() * 4);
+        console.log(x,y);
         if(this.Mode === "element"){
-            this.Grill[x][y].value === 0 ? this.Grill[x][y].value = (Math.random() < 0.17) ? 4 : 2 : this.RandomTiles();
+            console.log("element")
+            this.Grid[x][y].value === 0 ? this.Grid[x][y].value = (Math.random() < 0.17) ? 4 : 2 : this.RandomTiles();
             if (Math.random() <= 0.02) {
-                this.Grill[x][y].SetElement(new Elements("fire"));
+                this.Grid[x][y].element(new Elements("fire"));
             }else if(Math.random() <= 0.04) {
-                this.Grill[x][y].SetElement(new Elements("water"));
+                this.Grid[x][y].element(new Elements("water"));
             }else if(Math.random() <= 0.06){
-                this.Grill[x][y].SetElement(new Elements("earth"));
+                this.Grid[x][y].element(new Elements("earth"));
             }else if(Math.random() <= 0.08){
-                this.Grill[x][y].SetElement(new Elements("air"));
+                this.Grid[x][y].element(new Elements("air"));
             }
         }else if(this.Mode === "reverse"){
-            this.Grill[x][y].value === 0 ? this.Grill[x][y].value = (Math.random() < 0.17) ? 65536 : 131072 : this.RandomTiles();
+            console.log("reverse")
+            this.Grid[x][y].value === 0 ? this.Grid[x][y].value = (Math.random() < 0.17) ? 65536 : 131072 : this.RandomTiles();
         }else{
-            this.Grill[x][y].value === 0 ? this.Grill[x][y].value = (Math.random() < 0.17) ? 4 : 2 : this.RandomTiles();
+            if (this.Grid[x][y].value === 0){
+                this.Grid[x][y].value = (Math.random() < 0.17) ? 4 : 2;
+            }else{
+                this.RandomTiles()
+            }
         }
     }
 
@@ -57,6 +67,8 @@ class Game{
         if (moved) {
             this.RandomTiles();
         }
+
+        return moved
     }
 
     SetScore(score){
@@ -72,7 +84,8 @@ class Game{
     }
 
     moveUp(){
-
+        console.log(this.Grid)
+        return false
     }
 
     moveDown(){
@@ -86,4 +99,7 @@ class Game{
     moveRight(){
 
     }
+
 }
+
+

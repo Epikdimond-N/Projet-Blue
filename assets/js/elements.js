@@ -1,4 +1,4 @@
-class Elements{
+export class Elements{
 
     constructor(type = null){
         this.type = type;
