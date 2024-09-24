@@ -410,6 +410,7 @@ h1.title {
     font-size: 55px;
 }
 
+
 .tile.tile-2 .tile-inner {
     background: #eee4da;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
@@ -651,287 +652,6 @@ h1.title {
     margin-top: 50px;
 }
 
-@media screen and (max-width: 520px) {
-    html, body {
-        font-size: 15px;
-    }
-
-    body {
-        margin: 20px 0;
-        padding: 0 20px;
-    }
-
-    h1.title {
-        font-size: 27px;
-        margin-top: 15px;
-    }
-
-    .container2048 {
-        width: 280px;
-        margin: 0 auto;
-    }
-
-    .score-container2048, .best-container2048 {
-        margin-top: 0;
-        padding: 15px 10px;
-        min-width: 40px;
-    }
-
-    .heading {
-        margin-bottom: 10px;
-    }
-
-    .game-intro {
-        width: 55%;
-        display: block;
-        box-sizing: border-box;
-        line-height: 1.65;
-    }
-
-    .restart-button {
-        width: 42%;
-        padding: 0;
-        display: block;
-        box-sizing: border-box;
-        margin-top: 2px;
-    }
-
-    .game-container2048 {
-        margin-top: 17px;
-        position: relative;
-        padding: 10px;
-        cursor: default;
-        -webkit-touch-callout: none;
-        -ms-touch-callout: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -ms-touch-action: none;
-        touch-action: none;
-        background: #bbada0;
-        border-radius: 6px;
-        width: 280px;
-        height: 280px;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
-    .game-container2048 .game-message {
-        display: none;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: rgba(238, 228, 218, 0.5);
-        z-index: 100;
-        text-align: center;
-        -webkit-animation: fade-in 800ms ease 1200ms;
-        -moz-animation: fade-in 800ms ease 1200ms;
-        animation: fade-in 800ms ease 1200ms;
-        -webkit-animation-fill-mode: both;
-        -moz-animation-fill-mode: both;
-        animation-fill-mode: both;
-    }
-
-    .game-container2048 .game-message p {
-        font-size: 60px;
-        font-weight: bold;
-        height: 60px;
-        line-height: 60px;
-        margin-top: 222px;
-    }
-
-    .game-container2048 .game-message .lower {
-        display: block;
-        margin-top: 59px;
-    }
-
-    .game-container2048 .game-message a {
-        display: inline-block;
-        background: #8f7a66;
-        border-radius: 3px;
-        padding: 0 20px;
-        text-decoration: none;
-        color: #f9f6f2;
-        height: 40px;
-        line-height: 42px;
-        margin-left: 9px;
-    }
-
-    .game-container2048 .game-message a.keep-playing-button {
-        display: none;
-    }
-
-    .game-container2048 .game-message.game-won {
-        background: rgba(237, 194, 46, 0.5);
-        color: #f9f6f2;
-    }
-
-    .game-container2048 .game-message.game-won a.keep-playing-button {
-        display: inline-block;
-    }
-
-    .game-container2048 .game-message.game-won, .game-container2048 .game-message.game-over {
-        display: block;
-    }
-
-    .grid-container2048 {
-        position: absolute;
-        z-index: 1;
-    }
-
-    .grid-row {
-        margin-bottom: 10px;
-    }
-
-    .grid-row:last-child {
-        margin-bottom: 0;
-    }
-
-    .grid-row:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-    .grid-cell {
-        width: 57.5px;
-        height: 57.5px;
-        margin-right: 10px;
-        float: left;
-        border-radius: 3px;
-        background: rgba(238, 228, 218, 0.35);
-    }
-
-    .grid-cell:last-child {
-        margin-right: 0;
-    }
-
-    .tile-container2048 {
-        position: absolute;
-        z-index: 2;
-    }
-
-    .tile, .tile .tile-inner {
-        width: 58px;
-        height: 58px;
-        line-height: 67.5px;
-    }
-
-    .tile.tile-position-1-1 {
-        -webkit-transform: translate(0px, 0px);
-        -moz-transform: translate(0px, 0px);
-        transform: translate(0px, 0px);
-    }
-
-    .tile.tile-position-1-2 {
-        -webkit-transform: translate(0px, 67px);
-        -moz-transform: translate(0px, 67px);
-        transform: translate(0px, 67px);
-    }
-
-    .tile.tile-position-1-3 {
-        -webkit-transform: translate(0px, 135px);
-        -moz-transform: translate(0px, 135px);
-        transform: translate(0px, 135px);
-    }
-
-    .tile.tile-position-1-4 {
-        -webkit-transform: translate(0px, 202px);
-        -moz-transform: translate(0px, 202px);
-        transform: translate(0px, 202px);
-    }
-
-    .tile.tile-position-2-1 {
-        -webkit-transform: translate(67px, 0px);
-        -moz-transform: translate(67px, 0px);
-        transform: translate(67px, 0px);
-    }
-
-    .tile.tile-position-2-2 {
-        -webkit-transform: translate(67px, 67px);
-        -moz-transform: translate(67px, 67px);
-        transform: translate(67px, 67px);
-    }
-
-    .tile.tile-position-2-3 {
-        -webkit-transform: translate(67px, 135px);
-        -moz-transform: translate(67px, 135px);
-        transform: translate(67px, 135px);
-    }
-
-    .tile.tile-position-2-4 {
-        -webkit-transform: translate(67px, 202px);
-        -moz-transform: translate(67px, 202px);
-        transform: translate(67px, 202px);
-    }
-
-    .tile.tile-position-3-1 {
-        -webkit-transform: translate(135px, 0px);
-        -moz-transform: translate(135px, 0px);
-        transform: translate(135px, 0px);
-    }
-
-    .tile.tile-position-3-2 {
-        -webkit-transform: translate(135px, 67px);
-        -moz-transform: translate(135px, 67px);
-        transform: translate(135px, 67px);
-    }
-
-    .tile.tile-position-3-3 {
-        -webkit-transform: translate(135px, 135px);
-        -moz-transform: translate(135px, 135px);
-        transform: translate(135px, 135px);
-    }
-
-    .tile.tile-position-3-4 {
-        -webkit-transform: translate(135px, 202px);
-        -moz-transform: translate(135px, 202px);
-        transform: translate(135px, 202px);
-    }
-
-    .tile.tile-position-4-1 {
-        -webkit-transform: translate(202px, 0px);
-        -moz-transform: translate(202px, 0px);
-        transform: translate(202px, 0px);
-    }
-
-    .tile.tile-position-4-2 {
-        -webkit-transform: translate(202px, 67px);
-        -moz-transform: translate(202px, 67px);
-        transform: translate(202px, 67px);
-    }
-
-    .tile.tile-position-4-3 {
-        -webkit-transform: translate(202px, 135px);
-        -moz-transform: translate(202px, 135px);
-        transform: translate(202px, 135px);
-    }
-
-    .tile.tile-position-4-4 {
-        -webkit-transform: translate(202px, 202px);
-        -moz-transform: translate(202px, 202px);
-        transform: translate(202px, 202px);
-    }
-
-    .tile .tile-inner {
-        font-size: 35px;
-    }
-
-    .game-message p {
-        font-size: 30px !important;
-        height: 30px !important;
-        line-height: 30px !important;
-        margin-top: 90px !important;
-    }
-
-    .game-message .lower {
-        margin-top: 30px !important;
-    }
-}
-
 .left {
     float: left;
 }
@@ -1011,4 +731,322 @@ h1.title {
     color: #f9f6f2;
     background: #f65e3b;
     border-radius: 3px;
+}
+
+.tile-128 {
+    color: #f9f6f2;
+    background: #edcf72;
+    border-radius: 3px;
+}
+
+.tile-256 {
+    color: #f9f6f2;
+    background: #edcc61;
+    border-radius: 3px;
+}
+
+.tile-512 {
+    color: #f9f6f2;
+    background: #edc850;
+    border-radius: 3px;
+}
+
+.tile-1024 {
+    color: #f9f6f2;
+    background: #edc53f;
+    border-radius: 3px;
+}
+
+.tile-2048 {
+    color: #f9f6f2;
+    background: #edc22e;
+    border-radius: 3px;
+}
+
+.tile-super {
+    color: #f9f6f2;
+    background: #3c3a32;
+    border-radius: 3px;
+}
+
+/* Bouton de Feu */
+.flame-cell {
+    background-image: url("../img/fire.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+    width: 107px;
+    height: 107px;
+    line-height: 116.25px;
+    position: absolute;
+    transition: 100ms ease-in-out;
+    transition-property: transform;
+}
+.flame-cell-selected {
+    box-shadow: 0 0 5px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
+    animation: bounceShadowFlame 0.6s infinite ease-in-out;
+}
+@keyframes bounceShadowFlame {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 69, 0, 1), 0 0 15px rgba(255, 140, 0, 1);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 69, 0, 1), 0 0 60px rgba(255, 140, 0, 1);
+    }
+}
+
+
+.water-cell {
+    background-image: url("../img/water.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+    width: 107px;
+    height: 107px;
+    line-height: 116.25px;
+    position: absolute;
+    -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform
+}
+.water-cell-selected {
+    box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
+    animation: bounceShadowWater 0.6s infinite ease-in-out;
+}
+@keyframes bounceShadowWater {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 126, 255, 0.8), 0 0 60px rgba(0, 200, 255, 0.8);
+    }
+}
+
+.wind-cell {
+    background-image: url("../img/windy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+    width: 107px;
+    height: 107px;
+    line-height: 116.25px;
+    position: absolute;
+    -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform
+}
+.wind-cell-selected {
+    box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
+    animation: bounceShadowWind 0.6s infinite ease-in-out;
+}
+@keyframes bounceShadowWind {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 191, 255), 0 0 60px rgba(100, 255, 255);;
+    }
+}
+
+.earth-cell {
+    background-image: url("../img/earth.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+    width: 107px;
+    height: 107px;
+    line-height: 116.25px;
+    position: absolute;
+    -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+}
+.earth-cell-selected {
+    box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
+    animation: bounceShadowEarth 0.6s infinite ease-in-out;
+}
+@keyframes bounceShadowEarth {
+    0%, 100% {
+        box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
+    }
+    50% {
+        box-shadow: 0 0 25px #ffcb00, 0 0 60px #655400;
+    }
+}
+
+.earth-cell.tile-position-1-1,
+.flame-cell.tile-position-1-1,
+.water-cell.tile-position-1-1,
+.wind-cell.tile-position-1-1 {
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+}
+
+.earth-cell.tile-position-1-2,
+.flame-cell.tile-position-1-2,
+.water-cell.tile-position-1-2,
+.wind-cell.tile-position-1-2 {
+    -webkit-transform: translate(0px, 121px);
+    -moz-transform: translate(0px, 121px);
+    transform: translate(0px, 121px);
+}
+
+.earth-cell.tile-position-1-3,
+.flame-cell.tile-position-1-3,
+.water-cell.tile-position-1-3,
+.wind-cell.tile-position-1-3 {
+    -webkit-transform: translate(0px, 242px);
+    -moz-transform: translate(0px, 242px);
+    transform: translate(0px, 242px);
+}
+
+.earth-cell.tile-position-1-4,
+.flame-cell.tile-position-1-4,
+.water-cell.tile-position-1-4,
+.wind-cell.tile-position-1-4 {
+    -webkit-transform: translate(0px, 363px);
+    -moz-transform: translate(0px, 363px);
+    transform: translate(0px, 363px);
+}
+
+.earth-cell.tile-position-2-1,
+.flame-cell.tile-position-2-1,
+.water-cell.tile-position-2-1,
+.wind-cell.tile-position-2-1 {
+    -webkit-transform: translate(121px, 0px);
+    -moz-transform: translate(121px, 0px);
+    transform: translate(121px, 0px);
+}
+
+.earth-cell.tile-position-2-2,
+.flame-cell.tile-position-2-2,
+.water-cell.tile-position-2-2,
+.wind-cell.tile-position-2-2 {
+    -webkit-transform: translate(121px, 121px);
+    -moz-transform: translate(121px, 121px);
+    transform: translate(121px, 121px);
+}
+
+.earth-cell.tile-position-2-3,
+.flame-cell.tile-position-2-3,
+.water-cell.tile-position-2-3,
+.wind-cell.tile-position-2-3 {
+    -webkit-transform: translate(121px, 242px);
+    -moz-transform: translate(121px, 242px);
+    transform: translate(121px, 242px);
+}
+
+.earth-cell.tile-position-2-4,
+.flame-cell.tile-position-2-4,
+.water-cell.tile-position-2-4,
+.wind-cell.tile-position-2-4 {
+    -webkit-transform: translate(121px, 363px);
+    -moz-transform: translate(121px, 363px);
+    transform: translate(121px, 363px);
+}
+
+.earth-cell.tile-position-3-1,
+.flame-cell.tile-position-3-1,
+.water-cell.tile-position-3-1,
+.wind-cell.tile-position-3-1 {
+    -webkit-transform: translate(242px, 0px);
+    -moz-transform: translate(242px, 0px);
+    transform: translate(242px, 0px);
+}
+
+.tile.tile-position-3-2,
+.flame-cell.tile-position-3-2,
+.water-cell.tile-position-3-2,
+.wind-cell.tile-position-3-2 {
+    -webkit-transform: translate(242px, 121px);
+    -moz-transform: translate(242px, 121px);
+    transform: translate(242px, 121px);
+}
+
+.earth-cell.tile-position-3-3,
+.flame-cell.tile-position-3-3,
+.water-cell.tile-position-3-3,
+.wind-cell.tile-position-3-3 {
+    -webkit-transform: translate(242px, 242px);
+    -moz-transform: translate(242px, 242px);
+    transform: translate(242px, 242px);
+}
+
+.tile.tile-position-3-4,
+.flame-cell.tile-position-3-4,
+.water-cell.tile-position-3-4,
+.wind-cell.tile-position-3-4 {
+    -webkit-transform: translate(242px, 363px);
+    -moz-transform: translate(242px, 363px);
+    transform: translate(242px, 363px);
+}
+
+.earth-cell.tile-position-4-1,
+.flame-cell.tile-position-4-1,
+.water-cell.tile-position-4-1,
+.wind-cell.tile-position-4-1 {
+    -webkit-transform: translate(363px, 0px);
+    -moz-transform: translate(363px, 0px);
+    transform: translate(363px, 0px);
+}
+
+.earth-cell.tile-position-4-2,
+.flame-cell.tile-position-4-2,
+.water-cell.tile-position-4-2,
+.wind-cell.tile-position-4-2 {
+    -webkit-transform: translate(363px, 121px);
+    -moz-transform: translate(363px, 121px);
+    transform: translate(363px, 121px);
+}
+
+.earth-cell.tile-position-4-3,
+.flame-cell.tile-position-4-3,
+.water-cell.tile-position-4-3,
+.wind-cell.tile-position-4-3 {
+    -webkit-transform: translate(363px, 242px);
+    -moz-transform: translate(363px, 242px);
+    transform: translate(363px, 242px);
+}
+
+.earth-cell.tile-position-4-4,
+.flame-cell.tile-position-4-4,
+.water-cell.tile-position-4-4,
+.wind-cell.tile-position-4-4 {
+    -webkit-transform: translate(363px, 363px);
+    -moz-transform: translate(363px, 363px);
+    transform: translate(363px, 363px);
 }
