@@ -1,10 +1,11 @@
 import {Game} from "./game.js";
 
 const game = new Game();
+let grid = document.querySelector('.tile-container2048');
+displayGrid();
 
-document.addEventListener('keydown', (e) => {
-    console.log('e', e);
-    const grid = document.querySelector('.grid-container204');
+document.addEventListener('keydown', async (e) => {
+    grid = document.querySelector('.tile-container2048');
     switch (e.key) {
         case 'ArrowLeft':
             game.move('left');
@@ -19,5 +20,23 @@ document.addEventListener('keydown', (e) => {
             game.move('down');
             break;
     }
-    console.table(game.Grid);
+    grid.innerHTML = '';
+    displayGrid();
+    console.log(game.Grid);
 })
+
+function displayGrid(){
+    game.Grid.forEach((row) => {
+        row.forEach((tile) => {
+            if (tile.value !== 0) {
+                grid.innerHTML += `
+                    <div class="tile tile-${tile.value} tile-position-${tile.y + 1}-${tile.x + 1} ${tile.appear ? 'tile-new' : ''}">
+                        <div class="tile-inner">
+                            ${tile.value}
+                         </div>
+                    </div>
+                        `
+            }
+        })
+    });
+}

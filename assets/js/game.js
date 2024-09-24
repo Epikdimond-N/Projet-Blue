@@ -10,17 +10,13 @@ export class Game {
         this.Score = 0;
         this.Mode = mode;
         this.Grid = this.CreateGrill()
+        this.RandomTiles()
+        this.RandomTiles()
         this.Time = time;
     }
 
     CreateGrill() {
-        const grille = [
-            [new Tiles(0, 0, 0), new Tiles(0, 1, 4), new Tiles(0, 2, 4), new Tiles(0, 3, 0)],
-            [new Tiles(1, 0), new Tiles(1, 1), new Tiles(1, 2), new Tiles(1, 3)],
-            [new Tiles(2, 0), new Tiles(2, 1), new Tiles(2, 2), new Tiles(2, 3)],
-            [new Tiles(3, 0), new Tiles(3, 1), new Tiles(3, 2), new Tiles(3, 3, 9)]]
-        return grille;
-
+        return [...Array(4)].map((_, x) => Array(4).fill(null).map((_, y) => new Tiles(x, y)));
     }
 
     RandomTiles() {
@@ -45,7 +41,7 @@ export class Game {
             this.Grid[x][y].value === 0 ? this.Grid[x][y].value = (Math.random() < 0.17) ? 65536 : 131072 : this.RandomTiles();
         } else {
             if (this.Grid[x][y].value === 0) {
-                this.Grid[x][y].value = (Math.random() < 0.17) ? 4 : 2;
+                this.Grid[x][y] = new Tiles(x,y,true,(Math.random() < 0.17) ? 4 : 2);
             } else {
                 this.RandomTiles()
             }
