@@ -1,7 +1,7 @@
 import {Elements} from "./elements.js";
 
 export class Tiles{
-    constructor(x, y,type = null, value = 0){
+    constructor(x, y, value = 0, type = null){
         this.element = new Elements(type);
         this.value = value
         this.x = x
