@@ -20,11 +20,18 @@ document.addEventListener('keydown', async (e) => {
 
     if (game.Win !== null){
         document.querySelector('.game-message').classList.add(game.Win? 'game-won': 'game-over');
-        document.querySelector('.game-message').querySelector('p').innerText = game.Win? 'Vous avez gagné!': 'Jeu terminé!';
+        document.querySelector('.game-message').querySelector('p').innerText = game.Win? 'Vous avez gagné !': 'Jeu terminé !';
     }
 })
 
-document.querySelector('.restart-button').onclick = () => {
-    document.querySelector(".tile-container2048").innerHTML = "";
-    game = new Game("normal", 4);
-}
+const restartButtons = document.querySelectorAll('.restart-fonction');
+
+restartButtons.forEach(button => {
+    button.onclick = () => {
+        document.querySelector(".tile-container2048").innerHTML = "";
+        game = new Game("normal", 4);
+        const gameMessage = document.querySelector('.game-message');
+        gameMessage.classList.remove(game.Win ? 'game-won' : 'game-over');
+        gameMessage.querySelector('p').innerText = game.Win ? '' : '';
+    };
+});
