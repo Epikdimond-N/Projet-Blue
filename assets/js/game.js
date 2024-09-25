@@ -110,9 +110,9 @@ export class Game {
                         const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`);
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
-                        doubleCell.classList.add(`tile-double`);
+                        doubleCell.classList.add(`tile-merged`);
                         setTimeout(() => {
-                            doubleCell.classList.remove(`tile-double`);
+                            doubleCell.classList.remove(`tile-merged`);
                         }, 500);
                         doubleCell.innerHTML = `<div class="tile-inner">${newValue}</div>`;
 
@@ -157,9 +157,9 @@ export class Game {
                         const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`);
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
-                        doubleCell.classList.add(`tile-double`);
+                        doubleCell.classList.add(`tile-merged`);
                         setTimeout(() => {
-                            doubleCell.classList.remove(`tile-double`);
+                            doubleCell.classList.remove(`tile-merged`);
                         }, 500);
                         doubleCell.innerHTML = `<div class="tile-inner">${newValue}</div>`;
 
@@ -204,9 +204,9 @@ export class Game {
                         const doubleCell = document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`);
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
-                        doubleCell.classList.add(`tile-double`);
+                        doubleCell.classList.add(`tile-merged`);
                         setTimeout(() => {
-                            doubleCell.classList.remove(`tile-double`);
+                            doubleCell.classList.remove(`tile-merged`);
                         }, 500);
                         doubleCell.innerHTML = `<div class="tile-inner">${newValue}</div>`;
 
@@ -252,9 +252,9 @@ export class Game {
                         const doubleCell = document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`);
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
-                        doubleCell.classList.add(`tile-double`);
+                        doubleCell.classList.add(`tile-merged`);
                         setTimeout(() => {
-                            doubleCell.classList.remove(`tile-double`);
+                            doubleCell.classList.remove(`tile-merged`);
                         }, 500);
                         doubleCell.innerHTML = `<div class="tile-inner">${newValue}</div>`;
 
