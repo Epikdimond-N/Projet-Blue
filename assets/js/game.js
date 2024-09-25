@@ -11,6 +11,7 @@ export class Game {
         this.Grid = this.CreateGrill(dimension)
         this.RandomTiles(2)
         this.Time = time;
+        this.Win = null;
     }
 
     CreateGrill(dimension) {
@@ -23,7 +24,10 @@ export class Game {
         if (emptyCells.length === 0) return;
 
         const numbers = [...Array(cellNum)].map(getRandomStartNumber);
-        const selectedCells = getRandomEmptyCells(cellNum, emptyCells);
+        const selectedCells = getRandomEmptyCells(cellNum, emptyCells)
+
+        if (this.checkLoss()) this.Win = false
+        if (this.checkWin()) this.Win = true
 
         selectedCells.forEach((cellPosition, index) => {
             const tile = new Tiles(cellPosition.y , cellPosition.x, true, numbers[index]);
@@ -67,6 +71,9 @@ export class Game {
             this.RandomTiles();
         }
 
+        if (this.checkLoss()) this.Win = false;
+        if (this.checkWin()) this.Win = true;
+
         return moved
     }
 
@@ -78,9 +85,7 @@ export class Game {
             for (let rowIndex = 0; rowIndex < this.Grid.length; rowIndex++) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
-                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
-                    console.log(tile)
 
                     if (curNumInLine !== rowIndex) {
                         this.Grid[curNumInLine][colIndex].value = this.Grid[rowIndex][colIndex].value;
@@ -99,7 +104,6 @@ export class Game {
                         const oldValue = this.Grid[curNumInLine - 1][colIndex].value;
                         const newValue = oldValue * 2;
 
-                        console.log(curNumInLine - 1,colIndex)
                         this.Grid[curNumInLine - 1][colIndex].value = newValue;
                         this.Grid[curNumInLine][colIndex].value = 0;
 
@@ -134,9 +138,8 @@ export class Game {
             for (let rowIndex = this.Grid.length - 1; rowIndex >= 0; rowIndex--) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
-                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
-                    console.log(tile)
+
                     if (curNumInLine !== rowIndex) {
                         this.Grid[curNumInLine][colIndex].value = this.Grid[rowIndex][colIndex].value;
                         this.Grid[rowIndex][colIndex].value = 0;
@@ -189,9 +192,7 @@ export class Game {
             for (let colIndex = this.Grid[rowIndex].length - 1; colIndex >= 0; colIndex--) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
-                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
-                    console.log(tile)
 
                     if (curNumInLine !== colIndex) {
                         this.Grid[rowIndex][curNumInLine].value = this.Grid[rowIndex][colIndex].value;
@@ -246,9 +247,7 @@ export class Game {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
 
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
-                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
-                    console.log(tile)
 
                     if (curNumInLine !== colIndex) {
                         this.Grid[rowIndex][curNumInLine].value = this.Grid[rowIndex][colIndex].value;
@@ -289,9 +288,52 @@ export class Game {
                 }
             }
         }
-        console.log(document.querySelector('.tile-container2048'))
-        console.log(this.Grid)
         return check;
+    }
+
+    checkWin() {
+        for (let row = 0; row < this.Grid.length; row++) {
+            for (let col = 0; col < this.Grid[row].length; col++) {
+                if (this.Grid[row][col].value === 2048) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    checkLoss() {
+        for (let row = 0; row < this.Grid.length; row++) {
+            for (let col = 0; col < this.Grid[row].length; col++) {
+                if (this.Grid[row][col].value === 0) {
+                    return false;
+                }
+            }
+        }
+
+        for (let row = 0; row < this.Grid.length; row++) {
+            for (let col = 0; col < this.Grid[row].length; col++) {
+                let currentValue = this.Grid[row][col].value;
+
+                if (col < this.Grid[row].length - 1 && this.Grid[row][col + 1].value === currentValue) {
+                    return false;
+                }
+
+                if (row < this.Grid.length - 1 && this.Grid[row + 1][col].value === currentValue) {
+                    return false;
+                }
+
+                if (col > 0 && this.Grid[row][col - 1].value === currentValue) {
+                    return false;
+                }
+
+                if (row > 0 && this.Grid[row - 1][col].value === currentValue) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
 
