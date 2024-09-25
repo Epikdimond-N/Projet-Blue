@@ -1,6 +1,6 @@
 import {Game} from "./game.js";
 
-let game = new Game("normal", 4);
+let game = new Game("element", 4);
 
 document.addEventListener('keydown', async (e) => {
     switch (e.key) {
@@ -29,7 +29,7 @@ const restartButtons = document.querySelectorAll('.restart-fonction');
 restartButtons.forEach(button => {
     button.onclick = () => {
         document.querySelector(".tile-container2048").innerHTML = "";
-        game = new Game("normal", 4);
+        game = new Game("element", 4);
         const gameMessage = document.querySelector('.game-message');
         gameMessage.classList.remove(game.Win ? 'game-won' : 'game-over');
         gameMessage.querySelector('p').innerText = game.Win ? '' : '';

@@ -6,7 +6,7 @@ export class Elements{
 
     UsePower(){
         switch(this.type){
-            case "fire":
+            case "flame":
                 this.UseFire();
                 break;
             case "water":

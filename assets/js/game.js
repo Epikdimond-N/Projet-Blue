@@ -12,6 +12,9 @@ export class Game {
         this.RandomTiles(2)
         this.Time = time;
         this.Win = null;
+
+        console.log(this.Grid)
+        console.log(document.querySelector('.tile-container2048'))
     }
 
     CreateGrill(dimension) {
@@ -34,18 +37,22 @@ export class Game {
 
             if (this.Mode === "element") {
                 if (Math.random() <= 0.02) {
-                    tile.element = new Elements("fire");
+                    tile.element = new Elements("flame");
                 } else if (Math.random() <= 0.04) {
                     tile.element = new Elements("water");
                 } else if (Math.random() <= 0.06) {
                     tile.element = new Elements("earth");
                 } else if (Math.random() <= 0.08) {
-                    tile.element = new Elements("air");
+                    tile.element = new Elements("wind");
                 }
             }
 
             this.Grid[cellPosition.x][cellPosition.y] = tile;
             addCell(cellPosition, numbers[index]);
+            if (tile.element.type){
+                document.querySelector(`.tile-position-${cellPosition.y+1}-${cellPosition.x+1}`).classList.add(`${tile.element.type}-cell`)
+                document.querySelector(`.tile-position-${cellPosition.y+1}-${cellPosition.x+1}`).classList.remove('tile')
+            }
         });
     }
 
@@ -71,6 +78,9 @@ export class Game {
             this.RandomTiles();
         }
 
+        console.log(this.Grid)
+        console.log(document.querySelector('.tile-container2048'))
+
         if (this.checkLoss()) this.Win = false;
         if (this.checkWin()) this.Win = true;
 
@@ -85,11 +95,15 @@ export class Game {
             for (let rowIndex = 0; rowIndex < this.Grid.length; rowIndex++) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
+                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
+                    console.log(tile);
 
                     if (curNumInLine !== rowIndex) {
                         this.Grid[curNumInLine][colIndex].value = this.Grid[rowIndex][colIndex].value;
+                        this.Grid[curNumInLine][colIndex].element = new Elements(this.Grid[rowIndex][colIndex].element.type)
                         this.Grid[rowIndex][colIndex].value = 0;
+                        this.Grid[rowIndex][colIndex].element = new Elements();
 
                         this.Grid[curNumInLine][colIndex].x = colIndex;
                         this.Grid[curNumInLine][colIndex].y = curNumInLine;
@@ -101,16 +115,41 @@ export class Game {
                     }
 
                     if (curNumInLine > 0 && this.Grid[curNumInLine - 1][colIndex]?.value === this.Grid[curNumInLine][colIndex]?.value) {
+                        const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`);
                         const oldValue = this.Grid[curNumInLine - 1][colIndex].value;
                         const newValue = oldValue * 2;
 
                         this.Grid[curNumInLine - 1][colIndex].value = newValue;
                         this.Grid[curNumInLine][colIndex].value = 0;
 
+
+                        if (this.Grid[curNumInLine - 1][colIndex].element.type && this.Grid[curNumInLine][colIndex].element.type){
+                            if(this.Grid[curNumInLine - 1][colIndex].element.type !== this.Grid[curNumInLine][colIndex].element.type){
+                                this.Grid[curNumInLine - 1][colIndex].element = new Elements();
+                                doubleCell.classList.remove(`${this.Grid[curNumInLine - 1][colIndex].element.type}-cell`);
+                                doubleCell.classList.add("tile")
+                            }else{
+                                console.log("2 elem same")
+                            }
+                        }else{
+                            if(this.Grid[curNumInLine - 1][colIndex].element.type || this.Grid[curNumInLine][colIndex].element.type){
+                                if (this.Grid[curNumInLine][colIndex].element.type){
+                                    this.Grid[curNumInLine - 1][colIndex].element = this.Grid[curNumInLine][colIndex].element
+                                    console.log("1 elem cote actif")
+                                }else{
+                                    console.log("1 elem cote passif")
+                                }
+                            }
+                        }
+
                         check = true;
 
                         tile.remove();
-                        const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`);
+                        if (this.Grid[curNumInLine - 1][colIndex].element.type){
+                            document.querySelector(`.tile-position-${colIndex+1}-${curNumInLine}`).classList.add(`${this.Grid[curNumInLine - 1][colIndex].element.type}-cell`)
+                            document.querySelector(`.tile-position-${colIndex+1}-${curNumInLine}`).classList.remove('tile')
+                        }
+
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
                         doubleCell.classList.add(`tile-merged`);
@@ -138,11 +177,15 @@ export class Game {
             for (let rowIndex = this.Grid.length - 1; rowIndex >= 0; rowIndex--) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
+                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
+                    console.log(tile);
 
                     if (curNumInLine !== rowIndex) {
                         this.Grid[curNumInLine][colIndex].value = this.Grid[rowIndex][colIndex].value;
+                        this.Grid[curNumInLine][colIndex].element = new Elements(this.Grid[rowIndex][colIndex].element.type)
                         this.Grid[rowIndex][colIndex].value = 0;
+                        this.Grid[rowIndex][colIndex].element = new Elements();
 
                         this.Grid[curNumInLine][colIndex].x = colIndex;
                         this.Grid[curNumInLine][colIndex].y = curNumInLine;
@@ -153,18 +196,41 @@ export class Game {
                         tile.classList.add(`tile-position-${colIndex + 1}-${curNumInLine + 1}`);
                     }
 
-                    if (curNumInLine < this.Grid.length - 1 &&
-                        this.Grid[curNumInLine + 1][colIndex]?.value === this.Grid[curNumInLine][colIndex]?.value) {
+                    if (curNumInLine < this.Grid.length - 1 && this.Grid[curNumInLine + 1][colIndex]?.value === this.Grid[curNumInLine][colIndex]?.value) {
+                        const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`);
                         const oldValue = this.Grid[curNumInLine + 1][colIndex].value;
                         const newValue = oldValue * 2;
 
                         this.Grid[curNumInLine + 1][colIndex].value = newValue;
                         this.Grid[curNumInLine][colIndex].value = 0;
 
+                        if (this.Grid[curNumInLine + 1][colIndex].element.type && this.Grid[curNumInLine][colIndex].element.type){
+                            if(this.Grid[curNumInLine + 1][colIndex].element.type !== this.Grid[curNumInLine][colIndex].element.type){
+                                console.log("2 elem not same")
+                                this.Grid[curNumInLine + 1][colIndex].element = new Elements();
+                                doubleCell.classList.remove(`${this.Grid[curNumInLine + 1][colIndex].element.type}-cell`);
+                                doubleCell.classList.add("tile")
+                            }else{
+                                console.log("2 elem same")
+                            }
+                        }else{
+                            if(this.Grid[curNumInLine + 1][colIndex].element.type || this.Grid[curNumInLine][colIndex].element.type){
+                                if (this.Grid[curNumInLine][colIndex].element.type){
+                                    this.Grid[curNumInLine + 1][colIndex].element = this.Grid[curNumInLine][colIndex].element
+                                    console.log("1 elem cote actif")
+                                }else{
+                                    console.log("1 elem cote passif")
+                                }
+                            }
+                        }
+
                         check = true;
 
                         tile.remove();
-                        const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`);
+                        if (this.Grid[curNumInLine + 1][colIndex].element.type){
+                            document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`).classList.add(`${this.Grid[curNumInLine + 1][colIndex].element.type}-cell`)
+                            document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`).classList.remove('tile')
+                        }
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
                         doubleCell.classList.add(`tile-merged`);
@@ -192,11 +258,15 @@ export class Game {
             for (let colIndex = this.Grid[rowIndex].length - 1; colIndex >= 0; colIndex--) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
+                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
+                    console.log(tile);
 
                     if (curNumInLine !== colIndex) {
                         this.Grid[rowIndex][curNumInLine].value = this.Grid[rowIndex][colIndex].value;
+                        this.Grid[rowIndex][curNumInLine].element = new Elements(this.Grid[rowIndex][colIndex].element.type)
                         this.Grid[rowIndex][colIndex].value = 0;
+                        this.Grid[rowIndex][colIndex].element = new Elements();
 
                         this.Grid[rowIndex][curNumInLine].x = curNumInLine;
                         this.Grid[rowIndex][curNumInLine].y = rowIndex;
@@ -207,18 +277,41 @@ export class Game {
                         tile.classList.add(`tile-position-${curNumInLine + 1}-${rowIndex + 1}`);
                     }
 
-                    if (curNumInLine < this.Grid[rowIndex].length - 1 &&
-                        this.Grid[rowIndex][curNumInLine + 1]?.value === this.Grid[rowIndex][curNumInLine]?.value) {
+                    if (curNumInLine < this.Grid[rowIndex].length - 1 && this.Grid[rowIndex][curNumInLine + 1]?.value === this.Grid[rowIndex][curNumInLine]?.value) {
+                        const doubleCell = document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`);
                         const oldValue = this.Grid[rowIndex][curNumInLine + 1].value;
                         const newValue = oldValue * 2;
 
                         this.Grid[rowIndex][curNumInLine + 1].value = newValue;
                         this.Grid[rowIndex][curNumInLine].value = 0;
 
+                        if (this.Grid[rowIndex][curNumInLine + 1].element.type && this.Grid[rowIndex][curNumInLine].element.type){
+                            if(this.Grid[rowIndex][curNumInLine + 1].element.type !== this.Grid[rowIndex][curNumInLine].element.type){
+                                console.log("2 elem not same")
+                                this.Grid[rowIndex][curNumInLine + 1].element = new Elements();
+                                doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine + 1].element.type}-cell`);
+                                doubleCell.classList.add("tile")
+                            }else{
+                                console.log("2 elem same")
+                            }
+                        }else{
+                            if(this.Grid[rowIndex][curNumInLine + 1].element.type || this.Grid[rowIndex][curNumInLine].element.type){
+                                if (this.Grid[rowIndex][curNumInLine].element.type){
+                                    console.log("1 elem cote actif")
+                                    this.Grid[rowIndex][curNumInLine + 1].element = this.Grid[rowIndex][curNumInLine].element
+                                }else{
+                                    console.log("1 elem cote passif")
+                                }
+                            }
+                        }
+
                         check = true;
 
                         tile.remove();
-                        const doubleCell = document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`);
+                        if (this.Grid[rowIndex][curNumInLine + 1].element.type){
+                            document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`).classList.add(`${this.Grid[rowIndex][curNumInLine + 1].element.type}-cell`)
+                            document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`).classList.remove('tile')
+                        }
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
                         doubleCell.classList.add(`tile-merged`);
@@ -245,13 +338,17 @@ export class Game {
             let curNumInLine = 0;
             for (let colIndex = 0; colIndex < this.Grid[rowIndex].length; colIndex++) {
                 if (this.Grid[rowIndex][colIndex].value !== 0) {
-
+                    const doubleCell = document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`);
                     const curClassName = `tile-position-${this.Grid[rowIndex][colIndex].x + 1}-${this.Grid[rowIndex][colIndex].y + 1}`;
+                    console.log(curClassName)
                     const tile = document.querySelector(`.${curClassName}`);
+                    console.log(tile);
 
                     if (curNumInLine !== colIndex) {
                         this.Grid[rowIndex][curNumInLine].value = this.Grid[rowIndex][colIndex].value;
+                        this.Grid[rowIndex][curNumInLine].element = new Elements(this.Grid[rowIndex][colIndex].element.type)
                         this.Grid[rowIndex][colIndex].value = 0;
+                        this.Grid[rowIndex][colIndex].element = new Elements();
 
                         this.Grid[rowIndex][curNumInLine].x = curNumInLine;
                         this.Grid[rowIndex][curNumInLine].y = rowIndex;
@@ -269,10 +366,33 @@ export class Game {
                         this.Grid[rowIndex][curNumInLine - 1].value = newValue;
                         this.Grid[rowIndex][curNumInLine].value = 0;
 
+                        if (this.Grid[rowIndex][curNumInLine - 1].element.type && this.Grid[rowIndex][curNumInLine].element.type){
+                            if(this.Grid[rowIndex][curNumInLine - 1].element.type !== this.Grid[rowIndex][curNumInLine].element.type){
+                                this.Grid[rowIndex][curNumInLine - 1].element = new Elements();
+                                doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine - 1].element.type}-cell`);
+                                doubleCell.classList.add("tile")
+                                console.log("2 elem not same")
+                            }else{
+                                console.log("2 elem same")
+                            }
+                        }else{
+                            if(this.Grid[rowIndex][curNumInLine - 1].element.type || this.Grid[rowIndex][curNumInLine].element.type){
+                                if (this.Grid[rowIndex][curNumInLine].element.type){
+                                    this.Grid[rowIndex][curNumInLine - 1].element = this.Grid[rowIndex][curNumInLine].element
+                                    console.log("1 elem cote actif")
+                                }else{
+                                    console.log("1 elem cote passif")
+                                }
+                            }
+                        }
+
                         check = true;
 
                         tile.remove();
-                        const doubleCell = document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`);
+                        if (this.Grid[rowIndex][curNumInLine - 1].element.type){
+                            document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`).classList.add(`${this.Grid[rowIndex][curNumInLine - 1].element.type}-cell`)
+                            document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`).classList.remove('tile')
+                        }
                         doubleCell.classList.remove(`tile-${oldValue}`);
                         doubleCell.classList.add(`tile-${newValue}`);
                         doubleCell.classList.add(`tile-merged`);
