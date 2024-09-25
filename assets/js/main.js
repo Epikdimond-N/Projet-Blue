@@ -1,4 +1,4 @@
-import {Game} from "./game.js";
+import { Game } from "./game.js";
 
 let game = new Game("element", 4);
 
@@ -16,22 +16,29 @@ document.addEventListener('keydown', async (e) => {
         case 'ArrowDown':
             game.move('down');
             break;
+        case 'r':
+        case 'R':
+            restartGame();
+            break;
     }
 
-    if (game.Win !== null){
-        document.querySelector('.game-message').classList.add(game.Win? 'game-won': 'game-over');
-        document.querySelector('.game-message').querySelector('p').innerText = game.Win? 'Vous avez gagné !': 'Jeu terminé !';
+    if (game.Win !== null) {
+        document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
+        document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
-})
+});
 
 const restartButtons = document.querySelectorAll('.restart-fonction');
 
 restartButtons.forEach(button => {
-    button.onclick = () => {
-        document.querySelector(".tile-container2048").innerHTML = "";
-        game = new Game("element", 4);
-        const gameMessage = document.querySelector('.game-message');
-        gameMessage.classList.remove(game.Win ? 'game-won' : 'game-over');
-        gameMessage.querySelector('p').innerText = game.Win ? '' : '';
-    };
+    button.onclick = restartGame;
 });
+
+function restartGame() {
+    document.querySelector(".tile-container2048").innerHTML = "";
+    game = new Game("element", 4);
+    const gameMessage = document.querySelector('.game-message');
+    gameMessage.classList.remove('game-won', 'game-over');
+    gameMessage.querySelector('p').innerText = '';
+}
+
