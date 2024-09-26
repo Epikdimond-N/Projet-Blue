@@ -1,6 +1,6 @@
 import { Game } from "./game.js";
 
-let game = new Game("normal", 4);
+let game = new Game("element", 4);
 
 document.addEventListener('keydown', async (e) => {
     switch (e.key) {

@@ -124,9 +124,12 @@ export class Game {
 
                         if (this.Grid[curNumInLine - 1][colIndex].element && this.Grid[curNumInLine][colIndex].element){
                             if(this.Grid[curNumInLine - 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element){
-                                this.Grid[curNumInLine - 1][colIndex].element = null
+                                console.log("2 elem not same")
                                 doubleCell.classList.remove(`${this.Grid[curNumInLine - 1][colIndex].element}-cell`);
+                                this.Grid[curNumInLine - 1][colIndex].element = null
                                 doubleCell.classList.add("tile")
+                                console.log(this.Grid[rowIndex][curNumInLine - 1].element)
+
                             }else{
                                 console.log("2 elem same")
                             }
@@ -144,9 +147,9 @@ export class Game {
                         check = true;
 
                         tile.remove();
-                        if (this.Grid[curNumInLine - 1][colIndex].element){
-                            document.querySelector(`.tile-position-${colIndex+1}-${curNumInLine}`).classList.add(`${this.Grid[curNumInLine - 1][colIndex].element}-cell`)
-                            document.querySelector(`.tile-position-${colIndex+1}-${curNumInLine}`).classList.remove('tile')
+                        if (this.Grid[curNumInLine - 1][colIndex].element) {
+                            document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`).classList.add(`${this.Grid[curNumInLine - 1][colIndex].element}-cell`)
+                            document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`).classList.remove('tile')
                         }
 
                         doubleCell.classList.remove(`tile-${oldValue}`);
@@ -206,9 +209,11 @@ export class Game {
                         if (this.Grid[curNumInLine + 1][colIndex].element && this.Grid[curNumInLine][colIndex].element){
                             if(this.Grid[curNumInLine + 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element){
                                 console.log("2 elem not same")
-                                this.Grid[curNumInLine + 1][colIndex].element = null;
                                 doubleCell.classList.remove(`${this.Grid[curNumInLine + 1][colIndex].element}-cell`);
+                                this.Grid[curNumInLine + 1][colIndex].element = null;
                                 doubleCell.classList.add("tile")
+                                console.log(this.Grid[rowIndex][curNumInLine - 1].element)
+
                             }else{
                                 console.log("2 elem same")
                             }
@@ -287,9 +292,11 @@ export class Game {
                         if (this.Grid[rowIndex][curNumInLine + 1].element && this.Grid[rowIndex][curNumInLine].element){
                             if(this.Grid[rowIndex][curNumInLine + 1].element !== this.Grid[rowIndex][curNumInLine].element){
                                 console.log("2 elem not same")
-                                this.Grid[rowIndex][curNumInLine + 1].element = null;
                                 doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine + 1].element}-cell`);
                                 doubleCell.classList.add("tile")
+                                this.Grid[rowIndex][curNumInLine + 1].element = null;
+                                console.log(this.Grid[rowIndex][curNumInLine - 1].element)
+
                             }else{
                                 console.log("2 elem same")
                             }
@@ -367,10 +374,11 @@ export class Game {
 
                         if (this.Grid[rowIndex][curNumInLine - 1].element && this.Grid[rowIndex][curNumInLine].element){
                             if(this.Grid[rowIndex][curNumInLine - 1].element !== this.Grid[rowIndex][curNumInLine].element){
-                                this.Grid[rowIndex][curNumInLine - 1].element = null;
                                 doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine - 1].element}-cell`);
+                                this.Grid[rowIndex][curNumInLine - 1].element = null;
                                 doubleCell.classList.add("tile")
                                 console.log("2 elem not same")
+                                console.log(this.Grid[rowIndex][curNumInLine - 1].element)
                             }else{
                                 console.log("2 elem same")
                             }
