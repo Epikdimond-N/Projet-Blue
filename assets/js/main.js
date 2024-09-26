@@ -14,8 +14,8 @@ document.addEventListener('keydown', handleKeydown);
 function handleKeydown(e) {
     // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
     if (!isTimerSet && game.Mode ==="chrono") return;
-
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
+    //document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeEvent(tile))
 
     switch (e.key) {
         case 'ArrowLeft':
@@ -120,21 +120,28 @@ function assignNeighboringTiles(e){
     if (y >= 0 && y < 3){
         if(game.Grid[y+1][x].value !== 0){
             document.querySelector(`.tile-position-${x+1}-${y+2}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            document.querySelector(`.tile-position-${x+1}-${y+2}`).addEventListener("click", game.Grid[y][x].UsePower);
         } // on check le bas
         if (x >=0 && x<3){
             if(game.Grid[y][x+1].value !== 0){
                 document.querySelector(`.tile-position-${x+2}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x+2}-${y+1}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check à droite
         }
         if (x<=3 && x>0){
             if(game.Grid[y][x-1].value !== 0){
                 document.querySelector(`.tile-position-${x}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x}-${y+1}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check a gauche
         }
 
         if(y > 0 && y <=3){
             if(game.Grid[y-1][x].value !== 0){
                 document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x+1}-${y}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check le haut
         }
     }
@@ -142,25 +149,36 @@ function assignNeighboringTiles(e){
     if (y <= 3 && y > 0){
         if(game.Grid[y-1][x].value !== 0){
             document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            document.querySelector(`.tile-position-${x+1}-${y}`).addEventListener("click", game.Grid[y][x].UsePower);
+
         } // on check le bas
         if (x >=0 && x<3){
             if(game.Grid[y][x+1].value !== 0){
                 document.querySelector(`.tile-position-${x+2}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x+2}-${y+1}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check à droite
         }
         if (x<=3 && x>0){
             if(game.Grid[y][x-1].value !== 0){
                 document.querySelector(`.tile-position-${x}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x}-${y+1}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check a gauche
         }
 
         if(y > 0 && y <=3){
             if(game.Grid[y-1][x].value !== 0){
                 document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+                document.querySelector(`.tile-position-${x+1}-${y}`).addEventListener("click", game.Grid[y][x].UsePower);
+
             } // on check le haut
         }
     }
 
+    document.querySelectorAll(".tile-container2048").forEach((tile)=>{
+        tile.removeEventListener('click', game.Grid[y][x].UsePower)
+    })
 }
 
 function removeAnimation(tile){
@@ -185,3 +203,4 @@ function removeAnimation(tile){
 }
 
 export { handleKeydown, restartGame, Element, Chrono, Normal, Reverse };
+
