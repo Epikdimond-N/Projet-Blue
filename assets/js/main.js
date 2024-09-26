@@ -57,7 +57,7 @@ restartButtons.forEach(button => {
 
 function restartGame() {
     document.querySelector(".tile-container2048").innerHTML = "";
-    game = new Game("element", 4);
+    game = new Game(game.Mode, 4);
     const gameMessage = document.querySelector('.game-message');
     gameMessage.classList.remove('game-won', 'game-over');
     gameMessage.querySelector('p').innerText = '';
@@ -66,3 +66,18 @@ function restartGame() {
 }
 
 export { handleKeydown };
+function Element(){
+    game = new Game("element", 4);
+}
+
+function Chrono(){
+    game = new Game("chrono", 4);
+}
+
+function Normal(){
+    game = new Game("normal", 4);
+}
+
+function Reverse(){
+    game = new Game("reverse", 4);
+}
