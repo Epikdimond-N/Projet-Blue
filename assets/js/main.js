@@ -43,6 +43,17 @@ function handleKeydown(e) {
         document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
         document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
+    if (document.querySelector('.game-message').classList.contains('game-won')) {
+        document.removeEventListener('keydown', handleKeydown);
+    }
+    const continueBtn = document.querySelector('.keep-playing-button');
+    const gameMessage = document.querySelector('.game-message');
+
+    continueBtn.addEventListener('click', () => {
+        document.addEventListener('keydown', handleKeydown);
+        gameMessage.classList.remove('game-won');
+        game.Win = null;
+    });
 
     document.querySelectorAll(".tile-container2048").forEach((tile)=>{
         if(!tile.classList.contains('tile')) {
@@ -101,8 +112,10 @@ function assignNeighboringTiles(e){
     if (match) {
         x = match[1] - 1;
         y = match[2] - 1;
+        console.log(`x: ${x}, y: ${y}`);
     }
     parentClass.classList.add(game.Grid[y][x].element + "-cell-selected")
+    console.log(game.Grid[y][x])
 
     if (y >= 0 && y < 3){
         if(game.Grid[y+1][x].value !== 0){

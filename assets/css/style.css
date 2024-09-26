@@ -404,7 +404,7 @@ h1.title {
 .earth-cell.tile-position-3-3,
 .flame-cell.tile-position-3-3,
 .water-cell.tile-position-3-3,
-.wind-cell.tile-position-3-3{
+.wind-cell.tile-position-3-3 {
     -webkit-transform: translate(242px, 242px);
     -moz-transform: translate(242px, 242px);
     transform: translate(242px, 242px);
@@ -434,7 +434,7 @@ h1.title {
 .earth-cell.tile-position-4-2,
 .flame-cell.tile-position-4-2,
 .water-cell.tile-position-4-2,
-.wind-cell.tile-position-4-2{
+.wind-cell.tile-position-4-2 {
     -webkit-transform: translate(363px, 121px);
     -moz-transform: translate(363px, 121px);
     transform: translate(363px, 121px);
@@ -444,7 +444,7 @@ h1.title {
 .earth-cell.tile-position-4-3,
 .flame-cell.tile-position-4-3,
 .water-cell.tile-position-4-3,
-.wind-cell.tile-position-4-3{
+.wind-cell.tile-position-4-3 {
     -webkit-transform: translate(363px, 242px);
     -moz-transform: translate(363px, 242px);
     transform: translate(363px, 242px);
@@ -573,12 +573,6 @@ h1.title {
     .tile.tile-2048 .tile-inner {
         font-size: 15px;
     }
-}
-
-.tile.tile-super .tile-inner {
-    color: #f9f6f2;
-    background: #3c3a32;
-    font-size: 30px;
 }
 
 @media screen and (max-width: 520px) {
@@ -832,10 +826,65 @@ h1.title {
     border-radius: 3px;
 }
 
-.tile-super {
+.tile-4096 {
     color: #f9f6f2;
-    background: #3c3a32;
+    background: #f46674;
     border-radius: 3px;
+}
+.tile.tile-4096 .tile-inner {
+    color: #f9f6f2;
+    background: #f46674;
+    font-size: 30px;
+}
+.tile-8192 {
+    color: #f9f6f2;
+    background: #f34a5d;
+    border-radius: 3px;
+}
+.tile.tile-8192 .tile-inner {
+    color: #f9f6f2;
+    background: #f34a5d;
+    font-size: 30px;
+}
+.tile-16384 {
+    color: #f9f6f2;
+    background: #eb443c;
+    border-radius: 3px;
+}
+.tile.tile-16384 .tile-inner {
+    color: #f9f6f2;
+    background: #eb443c;
+    font-size: 30px;
+}
+.tile-32768 {
+    color: #f9f6f2;
+    background: #6ab8d6;
+    border-radius: 3px;
+}
+.tile.tile-32768 .tile-inner {
+    color: #f9f6f2;
+    background: #6ab8d6;
+    font-size: 30px;
+}
+.tile-65536 {
+    color: #f9f6f2;
+    background: #5ea1e5;
+    border-radius: 3px;
+}
+.tile.tile-65536 .tile-inner {
+    color: #f9f6f2;
+    background: #5ea1e5;
+    font-size: 30px;
+}
+.tile-131072 {
+    color: #f9f6f2;
+    background: #007fc2;
+    border-radius: 3px;
+}
+.tile.tile-131072 .tile-inner {
+    color: #f9f6f2;
+    background: #007fc2;
+    font-size: 30px;
 }
 
 /* Bouton de Feu */
@@ -860,23 +909,13 @@ h1.title {
 }
 
 .flame-cell-selected {
-    box-shadow: 0 0 5px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
-    animation: bounceShadowFlame 0.6s infinite ease-in-out;
+    box-shadow: 0 0 50px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
 }
+
 .flame-cell-selected-power {
-    box-shadow: 0 0 5px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
-    animation: bounceShadowFlame 0.6s infinite ease-in-out;
+    animation: blinking 1s infinite;
+    cursor: pointer;
 }
-
-@keyframes bounceShadowFlame {
-    0%, 100% {
-        box-shadow: 0 0 5px rgba(255, 69, 0, 1), 0 0 15px rgba(255, 140, 0, 1);
-    }
-    50% {
-        box-shadow: 0 0 25px rgba(255, 69, 0, 1), 0 0 60px rgba(255, 140, 0, 1);
-    }
-}
-
 
 .water-cell {
     background-image: url("../img/water.png");
@@ -903,22 +942,12 @@ h1.title {
 }
 
 .water-cell-selected {
-    box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
-    animation: bounceShadowWater 0.6s infinite ease-in-out;
+    box-shadow: 0 0 50px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
 }
 
 .water-cell-selected-power {
-    box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
-    animation: bounceShadowWater 0.6s infinite ease-in-out;
-}
-
-@keyframes bounceShadowWater {
-    0%, 100% {
-        box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
-    }
-    50% {
-        box-shadow: 0 0 25px rgba(0, 126, 255, 0.8), 0 0 60px rgba(0, 200, 255, 0.8);
-    }
+    animation: blinking 1s infinite;
+    cursor: pointer;
 }
 
 .wind-cell {
@@ -946,21 +975,12 @@ h1.title {
 }
 
 .wind-cell-selected {
-    box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
-    animation: bounceShadowWind 0.6s infinite ease-in-out;
-}
-.wind-cell-selected-power {
-    box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
-    animation: bounceShadowWind 0.6s infinite ease-in-out;
+    box-shadow: 0 0 50px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
 }
 
-@keyframes bounceShadowWind {
-    0%, 100% {
-        box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
-    }
-    50% {
-        box-shadow: 0 0 25px rgba(0, 191, 255), 0 0 60px rgba(100, 255, 255);;
-    }
+.wind-cell-selected-power {
+    animation: blinking 1s infinite;
+    cursor: pointer;
 }
 
 .earth-cell {
@@ -988,20 +1008,50 @@ h1.title {
 }
 
 .earth-cell-selected {
-    box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
-    animation: bounceShadowEarth 0.6s infinite ease-in-out;
-}
-.earth-cell-selected-power {
-    box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
-    animation: bounceShadowEarth 0.6s infinite ease-in-out;
+    box-shadow: 0 0 50px #ffcb00, 0 0 15px #655400;
 }
 
-@keyframes bounceShadowEarth {
+.earth-cell-selected-power {
+    animation: blinking 1s infinite;
+    cursor: pointer;
+}
+
+
+.anim-error-click {
+    border: 2px solid red;
+    -webkit-animation: shake-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    animation: shake-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+
+@keyframes shake-bottom {
     0%, 100% {
-        box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
+        transform: rotate(0deg);
+        transform-origin: 50% 100%
+    }
+    10% {
+        transform: rotate(2deg)
+    }
+    20%, 40%, 60% {
+        transform: rotate(-4deg)
+    }
+    30%, 50%, 70% {
+        transform: rotate(4deg)
+    }
+    80% {
+        transform: rotate(-2deg)
+    }
+    90% {
+        transform: rotate(2deg)
+    }
+}
+
+@keyframes blinking {
+    0%, 100% {
+        opacity: 0; /* Au début et à la fin, l'élément est transparent */
     }
     50% {
-        box-shadow: 0 0 25px #ffcb00, 0 0 60px #655400;
+        opacity: 1; /* À mi-chemin, l'élément est complètement visible */
     }
 }
 
@@ -1034,7 +1084,7 @@ h1.title {
     color: #3c3a32;
 }
 
-.container-timer>.p-container-timer {
+.container-timer > .p-container-timer {
     font-size: 1.6rem;
     margin-bottom: 2rem;
     text-align: center;
@@ -1108,13 +1158,15 @@ h1.title {
 .controls #reset {
     display: none;
 }
+
 .container-btn-timer {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 5rem;
 }
-.container-btn-timer>button {
+
+.container-btn-timer > button {
     padding: 10px 20px;
     font-size: 16px;
     margin: 5px;
@@ -1125,7 +1177,8 @@ h1.title {
     border-radius: 5px;
     font-weight: bold;
 }
-.container-btn-timer>button:hover {
+
+.container-btn-timer > button:hover {
     background-color: #8f7a66;
 }
 
