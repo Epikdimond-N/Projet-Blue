@@ -856,6 +856,7 @@ h1.title {
     position: absolute;
     transition: 100ms ease-in-out;
     transition-property: transform;
+    cursor: pointer;
 }
 
 .flame-cell-selected {
@@ -897,7 +898,8 @@ h1.title {
     transition: 100ms ease-in-out;
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
-    transition-property: transform
+    transition-property: transform;
+    cursor: pointer;
 }
 
 .water-cell-selected {
@@ -934,7 +936,8 @@ h1.title {
     transition: 100ms ease-in-out;
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
-    transition-property: transform
+    transition-property: transform;
+    cursor: pointer;
 }
 
 .wind-cell-selected {
@@ -972,6 +975,7 @@ h1.title {
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
     transition-property: transform;
+    cursor: pointer;
 }
 
 .earth-cell-selected {
