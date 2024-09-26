@@ -4,7 +4,7 @@ import {Tiles} from "./tiles.js";
 
 export class Game {
 
-    constructor(mode = "normal" ,dimension = 4 ,time = null) {
+    constructor(mode = "normal", dimension = 4, time = null) {
         this.Score = 0;
         this.Mode = mode;
         this.Grid = this.CreateGrill(dimension)
@@ -25,14 +25,14 @@ export class Game {
 
         if (emptyCells.length === 0) return;
 
-        const numbers = [...Array(cellNum)].map(getRandomStartNumber);
+        const numbers = this.Mode === "reverse"? [...Array(cellNum)].map(getRandomStartNumberReverse) : [...Array(cellNum)].map(getRandomStartNumber);
         const selectedCells = getRandomEmptyCells(cellNum, emptyCells)
 
         if (this.checkLoss()) this.Win = false
         if (this.checkWin()) this.Win = true
 
         selectedCells.forEach((cellPosition, index) => {
-            const tile = new Tiles(cellPosition.y , cellPosition.x, true, numbers[index]);
+            const tile = new Tiles(cellPosition.y, cellPosition.x, true, numbers[index]);
 
             if (this.Mode === "element") {
                 if (Math.random() <= 0.02) {
@@ -48,9 +48,9 @@ export class Game {
 
             this.Grid[cellPosition.x][cellPosition.y] = tile;
             addCell(cellPosition, numbers[index]);
-            if (tile.element){
-                document.querySelector(`.tile-position-${cellPosition.y+1}-${cellPosition.x+1}`).classList.add(`${tile.element}-cell`)
-                document.querySelector(`.tile-position-${cellPosition.y+1}-${cellPosition.x+1}`).classList.remove('tile')
+            if (tile.element) {
+                document.querySelector(`.tile-position-${cellPosition.y + 1}-${cellPosition.x + 1}`).classList.add(`${tile.element}-cell`)
+                document.querySelector(`.tile-position-${cellPosition.y + 1}-${cellPosition.x + 1}`).classList.remove('tile')
             }
         });
     }
@@ -116,29 +116,29 @@ export class Game {
                     if (curNumInLine > 0 && this.Grid[curNumInLine - 1][colIndex]?.value === this.Grid[curNumInLine][colIndex]?.value) {
                         const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine}`);
                         const oldValue = this.Grid[curNumInLine - 1][colIndex].value;
-                        const newValue = oldValue * 2;
+                        const newValue = this.Mode === "reverse" ? oldValue / 2 : oldValue * 2;
 
                         this.Grid[curNumInLine - 1][colIndex].value = newValue;
                         this.Grid[curNumInLine][colIndex].value = 0;
 
 
-                        if (this.Grid[curNumInLine - 1][colIndex].element && this.Grid[curNumInLine][colIndex].element){
-                            if(this.Grid[curNumInLine - 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element){
+                        if (this.Grid[curNumInLine - 1][colIndex].element && this.Grid[curNumInLine][colIndex].element) {
+                            if (this.Grid[curNumInLine - 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element) {
                                 console.log("2 elem not same")
                                 doubleCell.classList.remove(`${this.Grid[curNumInLine - 1][colIndex].element}-cell`);
                                 this.Grid[curNumInLine - 1][colIndex].element = null
                                 doubleCell.classList.add("tile")
                                 console.log(this.Grid[rowIndex][curNumInLine - 1].element)
 
-                            }else{
+                            } else {
                                 console.log("2 elem same")
                             }
-                        }else{
-                            if(this.Grid[curNumInLine - 1][colIndex].element || this.Grid[curNumInLine][colIndex].element){
-                                if (this.Grid[curNumInLine][colIndex].element){
+                        } else {
+                            if (this.Grid[curNumInLine - 1][colIndex].element || this.Grid[curNumInLine][colIndex].element) {
+                                if (this.Grid[curNumInLine][colIndex].element) {
                                     this.Grid[curNumInLine - 1][colIndex].element = this.Grid[curNumInLine][colIndex].element
                                     console.log("1 elem cote actif")
-                                }else{
+                                } else {
                                     console.log("1 elem cote passif")
                                 }
                             }
@@ -201,28 +201,28 @@ export class Game {
                     if (curNumInLine < this.Grid.length - 1 && this.Grid[curNumInLine + 1][colIndex]?.value === this.Grid[curNumInLine][colIndex]?.value) {
                         const doubleCell = document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`);
                         const oldValue = this.Grid[curNumInLine + 1][colIndex].value;
-                        const newValue = oldValue * 2;
+                        const newValue = this.Mode === "reverse" ? oldValue / 2 : oldValue * 2;
 
                         this.Grid[curNumInLine + 1][colIndex].value = newValue;
                         this.Grid[curNumInLine][colIndex].value = 0;
 
-                        if (this.Grid[curNumInLine + 1][colIndex].element && this.Grid[curNumInLine][colIndex].element){
-                            if(this.Grid[curNumInLine + 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element){
+                        if (this.Grid[curNumInLine + 1][colIndex].element && this.Grid[curNumInLine][colIndex].element) {
+                            if (this.Grid[curNumInLine + 1][colIndex].element !== this.Grid[curNumInLine][colIndex].element) {
                                 console.log("2 elem not same")
                                 doubleCell.classList.remove(`${this.Grid[curNumInLine + 1][colIndex].element}-cell`);
                                 this.Grid[curNumInLine + 1][colIndex].element = null;
                                 doubleCell.classList.add("tile")
                                 console.log(this.Grid[rowIndex][curNumInLine - 1].element)
 
-                            }else{
+                            } else {
                                 console.log("2 elem same")
                             }
-                        }else{
-                            if(this.Grid[curNumInLine + 1][colIndex].element || this.Grid[curNumInLine][colIndex].element){
-                                if (this.Grid[curNumInLine][colIndex].element){
+                        } else {
+                            if (this.Grid[curNumInLine + 1][colIndex].element || this.Grid[curNumInLine][colIndex].element) {
+                                if (this.Grid[curNumInLine][colIndex].element) {
                                     this.Grid[curNumInLine + 1][colIndex].element = this.Grid[curNumInLine][colIndex].element
                                     console.log("1 elem cote actif")
-                                }else{
+                                } else {
                                     console.log("1 elem cote passif")
                                 }
                             }
@@ -231,7 +231,7 @@ export class Game {
                         check = true;
 
                         tile.remove();
-                        if (this.Grid[curNumInLine + 1][colIndex].element){
+                        if (this.Grid[curNumInLine + 1][colIndex].element) {
                             document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`).classList.add(`${this.Grid[curNumInLine + 1][colIndex].element}-cell`)
                             document.querySelector(`.tile-position-${colIndex + 1}-${curNumInLine + 2}`).classList.remove('tile')
                         }
@@ -284,28 +284,28 @@ export class Game {
                     if (curNumInLine < this.Grid[rowIndex].length - 1 && this.Grid[rowIndex][curNumInLine + 1]?.value === this.Grid[rowIndex][curNumInLine]?.value) {
                         const doubleCell = document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`);
                         const oldValue = this.Grid[rowIndex][curNumInLine + 1].value;
-                        const newValue = oldValue * 2;
+                        const newValue = this.Mode === "reverse" ? oldValue / 2 : oldValue * 2;
 
                         this.Grid[rowIndex][curNumInLine + 1].value = newValue;
                         this.Grid[rowIndex][curNumInLine].value = 0;
 
-                        if (this.Grid[rowIndex][curNumInLine + 1].element && this.Grid[rowIndex][curNumInLine].element){
-                            if(this.Grid[rowIndex][curNumInLine + 1].element !== this.Grid[rowIndex][curNumInLine].element){
+                        if (this.Grid[rowIndex][curNumInLine + 1].element && this.Grid[rowIndex][curNumInLine].element) {
+                            if (this.Grid[rowIndex][curNumInLine + 1].element !== this.Grid[rowIndex][curNumInLine].element) {
                                 console.log("2 elem not same")
                                 doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine + 1].element}-cell`);
                                 doubleCell.classList.add("tile")
                                 this.Grid[rowIndex][curNumInLine + 1].element = null;
                                 console.log(this.Grid[rowIndex][curNumInLine - 1].element)
 
-                            }else{
+                            } else {
                                 console.log("2 elem same")
                             }
-                        }else{
-                            if(this.Grid[rowIndex][curNumInLine + 1].element || this.Grid[rowIndex][curNumInLine].element){
-                                if (this.Grid[rowIndex][curNumInLine].element){
+                        } else {
+                            if (this.Grid[rowIndex][curNumInLine + 1].element || this.Grid[rowIndex][curNumInLine].element) {
+                                if (this.Grid[rowIndex][curNumInLine].element) {
                                     console.log("1 elem cote actif")
                                     this.Grid[rowIndex][curNumInLine + 1].element = this.Grid[rowIndex][curNumInLine].element
-                                }else{
+                                } else {
                                     console.log("1 elem cote passif")
                                 }
                             }
@@ -314,7 +314,7 @@ export class Game {
                         check = true;
 
                         tile.remove();
-                        if (this.Grid[rowIndex][curNumInLine + 1].element){
+                        if (this.Grid[rowIndex][curNumInLine + 1].element) {
                             document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`).classList.add(`${this.Grid[rowIndex][curNumInLine + 1].element}-cell`)
                             document.querySelector(`.tile-position-${curNumInLine + 2}-${rowIndex + 1}`).classList.remove('tile')
                         }
@@ -367,27 +367,27 @@ export class Game {
 
                     if (curNumInLine > 0 && this.Grid[rowIndex][curNumInLine - 1]?.value === this.Grid[rowIndex][curNumInLine]?.value) {
                         const oldValue = this.Grid[rowIndex][curNumInLine - 1].value;
-                        const newValue = oldValue * 2;
+                        const newValue = this.Mode === "reverse" ? oldValue / 2 : oldValue * 2;
 
                         this.Grid[rowIndex][curNumInLine - 1].value = newValue;
                         this.Grid[rowIndex][curNumInLine].value = 0;
 
-                        if (this.Grid[rowIndex][curNumInLine - 1].element && this.Grid[rowIndex][curNumInLine].element){
-                            if(this.Grid[rowIndex][curNumInLine - 1].element !== this.Grid[rowIndex][curNumInLine].element){
+                        if (this.Grid[rowIndex][curNumInLine - 1].element && this.Grid[rowIndex][curNumInLine].element) {
+                            if (this.Grid[rowIndex][curNumInLine - 1].element !== this.Grid[rowIndex][curNumInLine].element) {
                                 doubleCell.classList.remove(`${this.Grid[rowIndex][curNumInLine - 1].element}-cell`);
                                 this.Grid[rowIndex][curNumInLine - 1].element = null;
                                 doubleCell.classList.add("tile")
                                 console.log("2 elem not same")
                                 console.log(this.Grid[rowIndex][curNumInLine - 1].element)
-                            }else{
+                            } else {
                                 console.log("2 elem same")
                             }
-                        }else{
-                            if(this.Grid[rowIndex][curNumInLine - 1].element || this.Grid[rowIndex][curNumInLine].element){
-                                if (this.Grid[rowIndex][curNumInLine].element){
+                        } else {
+                            if (this.Grid[rowIndex][curNumInLine - 1].element || this.Grid[rowIndex][curNumInLine].element) {
+                                if (this.Grid[rowIndex][curNumInLine].element) {
                                     this.Grid[rowIndex][curNumInLine - 1].element = this.Grid[rowIndex][curNumInLine].element
                                     console.log("1 elem cote actif")
-                                }else{
+                                } else {
                                     console.log("1 elem cote passif")
                                 }
                             }
@@ -396,7 +396,7 @@ export class Game {
                         check = true;
 
                         tile.remove();
-                        if (this.Grid[rowIndex][curNumInLine - 1].element){
+                        if (this.Grid[rowIndex][curNumInLine - 1].element) {
                             document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`).classList.add(`${this.Grid[rowIndex][curNumInLine - 1].element}-cell`)
                             document.querySelector(`.tile-position-${curNumInLine}-${rowIndex + 1}`).classList.remove('tile')
                         }
@@ -486,10 +486,10 @@ function getPositionEmptyCells(grid) {
 
     let emptyCells = [];
 
-    for(let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-        for(let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
+    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+        for (let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
             if (grid[rowIndex][colIndex].value === 0) {
-                emptyCells = [...emptyCells, {y: colIndex , x: rowIndex }];
+                emptyCells = [...emptyCells, {y: colIndex, x: rowIndex}];
             }
         }
     }
@@ -498,7 +498,14 @@ function getPositionEmptyCells(grid) {
 }
 
 function getRandomStartNumber() {
-    const possibilities = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4] ;
+    const possibilities = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4];
+    const rand = Math.floor(Math.random() * possibilities.length);
+
+    return possibilities[rand];
+}
+
+function getRandomStartNumberReverse() {
+    const possibilities = [131072, 131072, 131072, 131072, 131072, 131072, 131072, 131072, 131072, 65536];
     const rand = Math.floor(Math.random() * possibilities.length);
 
     return possibilities[rand];
@@ -506,7 +513,7 @@ function getRandomStartNumber() {
 
 function addCell(position, num) {
     const divEl = document.createElement("div");
-    divEl.classList.add('tile', `tile-${num}`, 'tile-new', `tile-position-${position.y + 1}-${position.x+ 1}`);
+    divEl.classList.add('tile', `tile-${num}`, 'tile-new', `tile-position-${position.y + 1}-${position.x + 1}`);
     divEl.innerHTML = `<div class="tile-inner">${num}</div>`;
     document.querySelector('.tile-container2048').append(divEl);
 
