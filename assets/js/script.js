@@ -1,3 +1,5 @@
+import {Element, restartGame, Chrono, Normal, Reverse, handleKeydown} from "./main.js";
+
 // Fonction pour désélectionner toutes les cellules d'autres types
 function deselectOtherCells() {
     console.log("caca");
@@ -94,6 +96,8 @@ chrono.addEventListener('click', () => {
     timer.classList.add('container-timer');
     chrono.style.display = 'none';
     title.innerText = '2048 Chrono';
+    Chrono();
+    restartGame();
 });
 
 baseGame.addEventListener('click', () => {
@@ -104,6 +108,9 @@ baseGame.addEventListener('click', () => {
     timer.classList.remove('container-timer');
     timer.classList.add('game-mode');
     title.innerText = '2048';
+    Normal();
+    restartGame();
+    document.addEventListener('keydown', handleKeydown);
 });
 
 elementGame.addEventListener('click', () => {
@@ -114,6 +121,9 @@ elementGame.addEventListener('click', () => {
     timer.classList.remove('container-timer');
     timer.classList.add('game-mode');
     title.innerText = '2048 Element';
+    Element();
+    restartGame();
+    document.addEventListener('keydown', handleKeydown);
 });
 
 reverse.addEventListener('click', () => {
@@ -124,4 +134,7 @@ reverse.addEventListener('click', () => {
     timer.classList.remove('container-timer');
     timer.classList.add('game-mode');
     title.innerText = '2048 Reverse';
+    Reverse();
+    restartGame();
+    document.addEventListener('keydown', handleKeydown);
 });

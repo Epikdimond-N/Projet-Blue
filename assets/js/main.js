@@ -1,5 +1,5 @@
 import { Game } from "./game.js";
-import { startTimer, resetTimer, commenceTimer } from "./timer.js";
+import {commenceTimer, resetTimer, startTimer} from "./timer.js";
 
 let game = new Game("element", 4);
 let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
@@ -65,7 +65,6 @@ function restartGame() {
     isTimerSet = false; // Réinitialiser l'indicateur de sélection de temps
 }
 
-export { handleKeydown };
 function Element(){
     game = new Game("element", 4);
 }
@@ -81,3 +80,5 @@ function Normal(){
 function Reverse(){
     game = new Game("reverse", 4);
 }
+
+export { handleKeydown, restartGame, Element, Chrono, Normal, Reverse };

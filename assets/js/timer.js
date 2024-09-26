@@ -1,9 +1,10 @@
-import { handleKeydown } from "./main.js";
+import {handleKeydown} from "./main.js";
 
 let timer; // Pour maintenir l'ID du minuteur
 let totalTime; // Temps total en secondes
 let remainingTime; // Temps restant en secondes
 let isTimerStarted = false; // Indicateur pour vérifier si le timer a commencé
+
 
 function startTimer(minutes) {
     // Définir le temps total et le temps restant
@@ -71,5 +72,6 @@ function resetTimer() {
     isTimerStarted = false;
 }
 
+
 // Exporter les fonctions
-export { startTimer, commenceTimer, resetTimer };
+export {startTimer, commenceTimer, resetTimer};
