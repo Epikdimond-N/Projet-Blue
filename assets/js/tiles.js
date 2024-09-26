@@ -7,37 +7,45 @@ export class Tiles{
         this.y = y
     }
 
-    UsePower(){
+    UsePower(tileSelected){
         switch(this.element){
             case "flame":
-                this.UseFire();
+                this.UseFire(tileSelected);
                 break;
             case "water":
-                this.UseWater();
+                this.UseWater(tileSelected);
                 break;
             case "earth":
-                this.UseEarth();
+                this.UseEarth(tileSelected);
                 break;
             case "wind":
-                this.UseWind();
+                this.UseWind(tileSelected);
                 break;
         }
+        this.element = null
 
     }
 
-    UseFire(){
-
+    UseFire(tileSelected){
+        tileSelected.value = 0
+        tileSelected.element = null
     }
 
-    UseWater(){
-
+    UseWater(tileSelected){
+        [this.x, tileSelected.x] = [tileSelected.x, this.x];
+        [this.y, tileSelected.y] = [tileSelected.y, this.y];
     }
 
-    UseEarth(){
-
+    UseEarth(tileSelected){
+        if (tileSelected){
+            this.value *= 2
+        }else {
+            this.value /= 2
+        }
     }
 
-    UseWind(){
-
+    UseWind(tileSelected){
+        [this.x, tileSelected.x] = [tileSelected.x, this.x];
+        [this.y, tileSelected.y] = [tileSelected.y, this.y];
     }
 }
