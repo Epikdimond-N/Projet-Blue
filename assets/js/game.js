@@ -5,11 +5,11 @@ import {Tiles} from "./tiles.js";
 export class Game {
 
     constructor(mode = "normal", dimension = 4, time = null) {
-        this.Score = 0;
         this.Mode = mode;
         this.Grid = this.CreateGrill(dimension)
         this.RandomTiles(2)
         this.Time = time;
+        this.Score = mode === "reverse" ? 11453246120 : 0;
         this.Win = null;
 
         console.log(this.Grid)
@@ -143,7 +143,10 @@ export class Game {
                                 }
                             }
                         }
-
+                        this.Score += newValue;
+                        document.querySelector(".score-addition").innerHTML = `+${newValue}`;
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerHTML = `${this.Score}`;
                         check = true;
 
                         tile.remove();
@@ -229,6 +232,10 @@ export class Game {
                         }
 
                         check = true;
+                        this.Score += newValue;
+                        document.querySelector(".score-addition").innerHTML = `+${newValue}`;
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerHTML = `${this.Score}`;
 
                         tile.remove();
                         if (this.Grid[curNumInLine + 1][colIndex].element) {
@@ -312,6 +319,10 @@ export class Game {
                         }
 
                         check = true;
+                        this.Score += newValue;
+                        document.querySelector(".score-addition").innerHTML = `+${newValue}`;
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerHTML = `${this.Score}`;
 
                         tile.remove();
                         if (this.Grid[rowIndex][curNumInLine + 1].element) {
@@ -394,6 +405,10 @@ export class Game {
                         }
 
                         check = true;
+                        this.Score += newValue;
+                        document.querySelector(".score-addition").innerHTML = `+${newValue}`;
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerHTML = `${this.Score}`;
 
                         tile.remove();
                         if (this.Grid[rowIndex][curNumInLine - 1].element) {
