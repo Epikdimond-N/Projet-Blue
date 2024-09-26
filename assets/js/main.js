@@ -15,6 +15,8 @@ function handleKeydown(e) {
     // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
     if (!isTimerSet && game.Mode ==="chrono") return;
 
+    document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
+
     switch (e.key) {
         case 'ArrowLeft':
             game.move('left');
@@ -41,7 +43,6 @@ function handleKeydown(e) {
         document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
         document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
-    console.log(document.querySelector(".tile-container2048"))
 
     document.querySelectorAll(".tile-container2048").forEach((tile)=>{
         if(!tile.classList.contains('tile')) {
@@ -92,16 +93,16 @@ function Reverse(){
 }
 
 function assignNeighboringTiles(e){
+    document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
+
     const parentClass = e.target.parentElement;
     const match = parentClass.className.match(/tile-position-(\d+)-(\d+)/);
     let x, y
     if (match) {
         x = match[1] - 1;
         y = match[2] - 1;
-        console.log(`x: ${x}, y: ${y}`);
     }
     parentClass.classList.add(game.Grid[y][x].element + "-cell-selected")
-    console.log(game.Grid[y][x])
 
     if (y >= 0 && y < 3){
         if(game.Grid[y+1][x].value !== 0){
@@ -149,5 +150,25 @@ function assignNeighboringTiles(e){
 
 }
 
+function removeAnimation(tile){
+        if(tile.classList.contains("flame-cell-selected-power")){
+            tile.classList.remove("flame-cell-selected-power");
+        } else if(tile.classList.contains("earth-cell-selected-power")){
+            tile.classList.remove("earth-cell-selected-power");
+        }else if(tile.classList.contains("wind-cell-selected-power")){
+            tile.classList.remove("wind-cell-selected-power");
+        }else if(tile.classList.contains("water-cell-selected-power")){
+            tile.classList.remove("water-cell-selected-power");
+        }else if(tile.classList.contains("flame-cell-selected")){
+            tile.classList.remove("flame-cell-selected");
+        } else if(tile.classList.contains("earth-cell-selected")){
+            tile.classList.remove("earth-cell-selected");
+        }else if(tile.classList.contains("wind-cell-selected")){
+            tile.classList.remove("wind-cell-selected");
+        }else if(tile.classList.contains("water-cell-selected")){
+            tile.classList.remove("water-cell-selected");
+        }
+
+}
 
 export { handleKeydown, restartGame, Element, Chrono, Normal, Reverse };
