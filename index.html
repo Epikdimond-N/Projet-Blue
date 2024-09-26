@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>2048 - Ymmerssion</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="assets/js/script.js" defer></script>
 </head>
 <body>
 <div class="container">
@@ -18,12 +17,13 @@
                 <div class="container2048">
                     <div class="left">
                         <div class="heading">
-                            <h1 class="title">2048</h1>
+                            <h1 id="title" class="title" style="font-size: 2.3em">2048</h1>
                             <div class="scores-container2048">
-                                <div class="score-container2048">36
-                                    <div class="score-addition">+36</div>
+                                <div class="score-container2048">
+                                    0
+                                    <div class="score-addition"></div>
                                 </div>
-                                <div class="best-container2048">36</div>
+                                <div class="best-container2048">0</div>
                                 <div class="restart-button restart-fonction" onclick="restart()"></div>
                             </div>
                         </div>
@@ -68,30 +68,59 @@
                 </div>
             </td>
             <td class="game-list" valign="center">
-                <div>
-                    <div style="font-weight:bold; padding-bottom: 10px">VARIATIONS</div>
-                    <a href="2048x5" target="_parent">
-                        <div class="game-item tile4">
-                            <img class="left" src="//jeu2048.fr/icon/2048x5.png">
-                            <div class="right">2048 Chrono</div>
+                <div class="game-list-ctn">
+                    <div class="game-mode" id="timer">
+                        <p class="p-container-timer">Sélectionnez une durée, puis déplacez les tuiles pour démarrer le
+                            minuteur.</p>
+                        <h1>COUNTDOWN</h1>
+                        <div class="timer">
+                            <div class="circle">
+                                <div class="time">
+                                    <p id="minutes">00</p>
+                                    <p>:</p>
+                                    <p id="seconds">00</p>
+                                </div>
+                            </div>
                         </div>
-                    </a><a href="2048x8" target="_parent">
-                    <div class="game-item tile8">
-                        <img class="left" src="//jeu2048.fr/icon/2048x8.png">
-                        <div class="right">2048 Element</div>
+                        <div class="container-btn-timer">
+                            <button>1 min</button>
+                            <button>5 min</button>
+                            <button>10 min</button>
+                        </div>
+
                     </div>
-                </a><a href="2048-4d" target="_parent">
-                    <div class="game-item tile16">
-                        <img class="left" src="//jeu2048.fr/icon/2048-4d.png">
-                        <div class="right">2048 Reverse</div>
+                    <div class="game-list center-game">
+                        <div style="font-weight:bold; padding-bottom: 10px">VARIATIONS</div>
+                        <a id="2048-chrono" href="#2048-chrono" target="_parent">
+                            <div class="game-item tile4">
+                                <img class="left" src="/assets/img/chrono.png">
+                                <div class="right">2048 chrono</div>
+                            </div>
+                        </a><a id="2048" href="#2048" target="_parent" style="display: none">
+                        <div class="game-item tile4">
+                            <img class="left" src="/assets/img/chrono.png">
+                            <div class="right">2048</div>
+                        </div>
+                    </a><a id="2048-element" href="#2048-element" target="_parent">
+                        <div class="game-item tile8">
+                            <img class="left" src="/assets/img/element.png">
+                            <div class="right">2048 Element</div>
+                        </div>
+                    </a><a id="2048-reverse" href="#2048-reverse" target="_parent">
+                        <div class="game-item tile16">
+                            <img class="left" src="//jeu2048.fr/icon/2048-4d.png">
+                            <div class="right">2048 Reverse</div>
+                        </div>
+                    </a>
                     </div>
-                </a></div>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<script type="module" src="./assets/js/main.js"></script>
-
+<script src="assets/js/script.js" type="module"></script>
+<script src="./assets/js/main.js" type="module"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 </body>
 </html>
