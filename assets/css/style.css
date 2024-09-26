@@ -907,6 +907,11 @@ h1.title {
     animation: bounceShadowWater 0.6s infinite ease-in-out;
 }
 
+.water-cell-selected-power {
+    box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
+    animation: bounceShadowWater 0.6s infinite ease-in-out;
+}
+
 @keyframes bounceShadowWater {
     0%, 100% {
         box-shadow: 0 0 5px rgba(0, 126, 255, 0.8), 0 0 15px rgba(0, 200, 255, 0.8);
@@ -941,6 +946,10 @@ h1.title {
 }
 
 .wind-cell-selected {
+    box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
+    animation: bounceShadowWind 0.6s infinite ease-in-out;
+}
+.wind-cell-selected-power {
     box-shadow: 0 0 5px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
     animation: bounceShadowWind 0.6s infinite ease-in-out;
 }
@@ -979,6 +988,10 @@ h1.title {
 }
 
 .earth-cell-selected {
+    box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
+    animation: bounceShadowEarth 0.6s infinite ease-in-out;
+}
+.earth-cell-selected-power {
     box-shadow: 0 0 5px #ffcb00, 0 0 15px #655400;
     animation: bounceShadowEarth 0.6s infinite ease-in-out;
 }
