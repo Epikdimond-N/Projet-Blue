@@ -1,7 +1,7 @@
 import { Game } from "./game.js";
 import {commenceTimer, resetTimer, startTimer} from "./timer.js";
 
-let game = new Game("element", 4);
+let game = new Game();
 let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
 
 document.addEventListener('keydown', handleKeydown);
