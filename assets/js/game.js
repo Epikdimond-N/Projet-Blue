@@ -4,11 +4,10 @@ import {Tiles} from "./tiles.js";
 
 export class Game {
 
-    constructor(mode = "normal", dimension = 4, time = null) {
+    constructor(mode = "normal", dimension = 4) {
         this.Mode = mode;
         this.Grid = this.CreateGrill(dimension)
         this.RandomTiles(2)
-        this.Time = time;
         this.Score = mode === "reverse" ? 11453246120 : 0;
         this.Win = null;
     }

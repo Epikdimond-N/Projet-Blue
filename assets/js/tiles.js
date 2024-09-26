@@ -66,11 +66,16 @@ export class Tiles{
     }
 
     UseEarth(tileSelected){
-        if (tileSelected){
-            this.value *= 2
-        }else {
-            this.value /= 2
-        }
+        tileSelected.value *= 2
+        document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`tile-${tileSelected.value / 2}`)
+        document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add(`tile-${tileSelected.value}`)
+        document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).innerHTML = `<div class="tile-inner">${tileSelected.value}</div>`
+
+        document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.remove(`${this.element}-cell`);
+        document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.add("tile");
+        this.element = null
+
+
     }
 
     UseWind(tileSelected){
