@@ -128,9 +128,11 @@ export class Game {
                                 }
                             }
                         }
-                        this.Score += newValue;
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">+${newValue}</div>`
+                        if (this.Mode === "reverse") this.Score -= newValue;
+                        else this.Score += newValue;
+
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${this.Score}`;
 
                         check = true;
@@ -208,9 +210,10 @@ export class Game {
                         }
 
                         check = true;
-                        this.Score += newValue;
+                        if (this.Mode === "reverse") this.Score -= newValue;
+                        else this.Score += newValue;
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">+${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${this.Score}`;
 
 
@@ -286,9 +289,10 @@ export class Game {
                         }
 
                         check = true;
-                        this.Score += newValue;
+                        if (this.Mode === "reverse") this.Score -= newValue;
+                        else this.Score += newValue;
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">+${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${this.Score}`;
 
                         tile.remove();
@@ -363,8 +367,10 @@ export class Game {
                         }
 
                         check = true;
-                        this.Score += newValue;
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">+${newValue}</div>`
+                        if (this.Mode === "reverse") this.Score -= newValue;
+                        else this.Score += newValue;
+
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${this.Score}`;
 
                         tile.remove();
@@ -395,7 +401,7 @@ export class Game {
             for (let col = 0; col < this.Grid[row].length; col++) {
                 if (this.Mode === "reverse" && this.Grid[row][col].value === 256) {
                     return true;
-                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2048){
+                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2408){
                     return true;
                 }
             }

@@ -4,7 +4,7 @@ import {commenceTimer, resetTimer, startTimer} from "./timer.js";
 let game = new Game();
 let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
 let lstTilesEvenListeners = []
-
+let rem = true
 
 document.querySelectorAll(".tile-container2048").forEach((tile) => {
     if (!tile.classList.contains('tile')) {
@@ -47,10 +47,12 @@ function handleKeydown(e) {
     if (game.Mode === "chrono") commenceTimer(); // Démarrer le timer au premier mouvement
 
     // Vérification de la victoire ou de la défaite
-    if (game.Win !== null) {
+    if (game.Win !== null && rem) {
+        rem = false
         document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
         document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
+
     if (document.querySelector('.game-message').classList.contains('game-won')) {
         document.removeEventListener('keydown', handleKeydown);
     }
@@ -93,22 +95,27 @@ function restartGame() {
     gameMessage.querySelector('p').innerText = '';
     resetTimer();
     isTimerSet = false;
+    rem = true
 }
 
 function Element() {
     game = new Game("element", 4);
+    rem = true
 }
 
 function Chrono() {
     game = new Game("chrono", 4);
+    rem = true
 }
 
 function Normal() {
     game = new Game("normal", 4);
+    rem = true
 }
 
 function Reverse() {
     game = new Game("reverse", 4);
+    rem = true
 }
 
 function assignNeighboringTiles(e) {
