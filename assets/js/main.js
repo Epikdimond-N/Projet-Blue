@@ -4,6 +4,11 @@ import {commenceTimer, resetTimer, startTimer} from "./timer.js";
 let game = new Game();
 let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
 
+document.querySelectorAll(".tile-container2048").forEach((tile)=>{
+    if(!tile.classList.contains('tile')) {
+        tile.addEventListener("click", assignNeighboringTiles)
+    }
+})
 document.addEventListener('keydown', handleKeydown);
 
 function handleKeydown(e) {
@@ -36,6 +41,13 @@ function handleKeydown(e) {
         document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
         document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
+    console.log(document.querySelector(".tile-container2048"))
+
+    document.querySelectorAll(".tile-container2048").forEach((tile)=>{
+        if(!tile.classList.contains('tile')) {
+            tile.addEventListener("click", assignNeighboringTiles)
+        }
+    })
 }
 
 // Gestion des clics sur les boutons pour le timer
@@ -78,5 +90,64 @@ function Normal(){
 function Reverse(){
     game = new Game("reverse", 4);
 }
+
+function assignNeighboringTiles(e){
+    const parentClass = e.target.parentElement;
+    const match = parentClass.className.match(/tile-position-(\d+)-(\d+)/);
+    let x, y
+    if (match) {
+        x = match[1] - 1;
+        y = match[2] - 1;
+        console.log(`x: ${x}, y: ${y}`);
+    }
+    parentClass.classList.add(game.Grid[y][x].element + "-cell-selected")
+    console.log(game.Grid[y][x])
+
+    if (y >= 0 && y < 3){
+        if(game.Grid[y+1][x].value !== 0){
+            document.querySelector(`.tile-position-${x+1}-${y+2}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+        } // on check le bas
+        if (x >=0 && x<3){
+            if(game.Grid[y][x+1].value !== 0){
+                document.querySelector(`.tile-position-${x+2}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check à droite
+        }
+        if (x<=3 && x>0){
+            if(game.Grid[y][x-1].value !== 0){
+                document.querySelector(`.tile-position-${x}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check a gauche
+        }
+
+        if(y > 0 && y <=3){
+            if(game.Grid[y-1][x].value !== 0){
+                document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check le haut
+        }
+    }
+
+    if (y <= 3 && y > 0){
+        if(game.Grid[y-1][x].value !== 0){
+            document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+        } // on check le bas
+        if (x >=0 && x<3){
+            if(game.Grid[y][x+1].value !== 0){
+                document.querySelector(`.tile-position-${x+2}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check à droite
+        }
+        if (x<=3 && x>0){
+            if(game.Grid[y][x-1].value !== 0){
+                document.querySelector(`.tile-position-${x}-${y+1}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check a gauche
+        }
+
+        if(y > 0 && y <=3){
+            if(game.Grid[y-1][x].value !== 0){
+                document.querySelector(`.tile-position-${x+1}-${y}`).classList.add(game.Grid[y][x].element+'-cell-selected-power');
+            } // on check le haut
+        }
+    }
+
+}
+
 
 export { handleKeydown, restartGame, Element, Chrono, Normal, Reverse };
