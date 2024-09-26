@@ -393,7 +393,9 @@ export class Game {
     checkWin() {
         for (let row = 0; row < this.Grid.length; row++) {
             for (let col = 0; col < this.Grid[row].length; col++) {
-                if (this.Grid[row][col].value === (this.Mode === "reverse") ? 256: 2048) {
+                if (this.Mode === "reverse" && this.Grid[row][col].value === 256) {
+                    return true;
+                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2048){
                     return true;
                 }
             }
