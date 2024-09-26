@@ -460,7 +460,11 @@ h1.title {
     transform: translate(363px, 363px);
 }
 
-.tile {
+.tile,
+.earth-cell,
+.flame-cell,
+.water-cell,
+.wind-cell {
     position: absolute;
     -webkit-transition: 100ms ease-in-out;
     -moz-transition: 100ms ease-in-out;
@@ -473,6 +477,17 @@ h1.title {
 .tile .tile-inner {
     border-radius: 3px;
     background: #eee4da;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px;
+}
+
+.earth-cell .tile-inner,
+.flame-cell .tile-inner,
+.water-cell .tile-inner,
+.wind-cell .tile-inner {
+    border-radius: 3px;
     text-align: center;
     font-weight: bold;
     z-index: 10;
@@ -543,6 +558,21 @@ h1.title {
     font-size: 45px;
 }
 
+.earth-cell.tile-512 .tile-inner,
+.flame-cell.tile-512 .tile-inner,
+.water-cell.tile-512 .tile-inner,
+.wind-cell.tile-512 .tile-inner,
+.earth-cell.tile-256 .tile-inner,
+.flame-cell.tile-256 .tile-inner,
+.water-cell.tile-256 .tile-inner,
+.wind-cell.tile-256 .tile-inner,
+.earth-cell.tile-128 .tile-inner,
+.flame-cell.tile-128 .tile-inner,
+.water-cell.tile-128 .tile-inner,
+.wind-cell.tile-128 .tile-inner{
+    font-size: 45px;
+}
+
 @media screen and (max-width: 520px) {
     .tile.tile-512 .tile-inner {
         font-size: 25px;
@@ -566,6 +596,17 @@ h1.title {
     color: #f9f6f2;
     background: #edc22e;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px;
+}
+
+.earth-cell.tile-2048 .tile-inner,
+.flame-cell.tile-2048 .tile-inner,
+.water-cell.tile-2048 .tile-inner,
+.wind-cell.tile-2048 .tile-inner,
+.earth-cell.tile-1024 .tile-inner,
+.flame-cell.tile-1024 .tile-inner,
+.water-cell.tile-1024 .tile-inner,
+.wind-cell.tile-1024 .tile-inner{
     font-size: 35px;
 }
 
@@ -831,59 +872,97 @@ h1.title {
     background: #f46674;
     border-radius: 3px;
 }
+
 .tile.tile-4096 .tile-inner {
     color: #f9f6f2;
     background: #f46674;
     font-size: 30px;
 }
+
 .tile-8192 {
     color: #f9f6f2;
     background: #f34a5d;
     border-radius: 3px;
 }
+
 .tile.tile-8192 .tile-inner {
     color: #f9f6f2;
     background: #f34a5d;
     font-size: 30px;
 }
+
 .tile-16384 {
     color: #f9f6f2;
     background: #eb443c;
     border-radius: 3px;
 }
+
 .tile.tile-16384 .tile-inner {
     color: #f9f6f2;
     background: #eb443c;
     font-size: 30px;
 }
+
 .tile-32768 {
     color: #f9f6f2;
     background: #6ab8d6;
     border-radius: 3px;
 }
+
 .tile.tile-32768 .tile-inner {
     color: #f9f6f2;
     background: #6ab8d6;
     font-size: 30px;
 }
+
 .tile-65536 {
     color: #f9f6f2;
     background: #5ea1e5;
     border-radius: 3px;
 }
+
 .tile.tile-65536 .tile-inner {
     color: #f9f6f2;
     background: #5ea1e5;
     font-size: 30px;
 }
+
 .tile-131072 {
     color: #f9f6f2;
     background: #007fc2;
     border-radius: 3px;
 }
+
 .tile.tile-131072 .tile-inner {
     color: #f9f6f2;
     background: #007fc2;
+    font-size: 30px;
+}
+
+.earth-cell.tile-4096 .tile-inner,
+.flame-cell.tile-4096 .tile-inner,
+.water-cell.tile-4096 .tile-inner,
+.wind-cell.tile-4096 .tile-inner,
+.earth-cell.tile-8192 .tile-inner,
+.flame-cell.tile-8192 .tile-inner,
+.water-cell.tile-8192 .tile-inner,
+.wind-cell.tile-8192 .tile-inner,
+.earth-cell.tile-16384 .tile-inner,
+.flame-cell.tile-16384 .tile-inner,
+.water-cell.tile-16384 .tile-inner,
+.wind-cell.tile-16384 .tile-inner,
+.earth-cell.tile-32768 .tile-inner,
+.flame-cell.tile-32768 .tile-inner,
+.water-cell.tile-32768 .tile-inner,
+.wind-cell.tile-32768 .tile-inner,
+.earth-cell.tile-65536 .tile-inner,
+.flame-cell.tile-65536 .tile-inner,
+.water-cell.tile-65536 .tile-inner,
+.wind-cell.tile-65536 .tile-inner,
+.earth-cell.tile-131072 .tile-inner,
+.flame-cell.tile-131072 .tile-inner,
+.water-cell.tile-131072 .tile-inner,
+.wind-cell.tile-131072 .tile-inner {
     font-size: 30px;
 }
 
