@@ -8,30 +8,28 @@ document.addEventListener('keydown', handleKeydown);
 
 function handleKeydown(e) {
     // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
-    if (!isTimerSet) return;
+    if (!isTimerSet && game.Mode ==="chrono") return;
 
     switch (e.key) {
         case 'ArrowLeft':
             game.move('left');
-            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowRight':
             game.move('right');
-            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowUp':
             game.move('up');
-            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowDown':
             game.move('down');
-            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'r':
         case 'R':
             restartGame();
-            break;
+            return;
     }
+
+    if (game.Mode === "chrono") commenceTimer(); // Démarrer le timer au premier mouvement
 
     // Vérification de la victoire ou de la défaite
     if (game.Win !== null) {
