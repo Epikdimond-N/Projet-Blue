@@ -1,20 +1,31 @@
 import { Game } from "./game.js";
+import { startTimer, resetTimer, commenceTimer } from "./timer.js";
 
 let game = new Game("element", 4);
+let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
 
-document.addEventListener('keydown', async (e) => {
+document.addEventListener('keydown', handleKeydown);
+
+function handleKeydown(e) {
+    // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
+    if (!isTimerSet) return;
+
     switch (e.key) {
         case 'ArrowLeft':
             game.move('left');
+            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowRight':
             game.move('right');
+            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowUp':
             game.move('up');
+            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'ArrowDown':
             game.move('down');
+            commenceTimer(); // Démarrer le timer sur le premier mouvement
             break;
         case 'r':
         case 'R':
@@ -22,10 +33,20 @@ document.addEventListener('keydown', async (e) => {
             break;
     }
 
+    // Vérification de la victoire ou de la défaite
     if (game.Win !== null) {
         document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
         document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
     }
+}
+
+// Gestion des clics sur les boutons pour le timer
+document.querySelectorAll('.container-btn-timer button').forEach(button => {
+    button.onclick = function() {
+        const minutes = parseInt(this.innerText); // Récupérer les minutes à partir du texte du bouton
+        startTimer(minutes); // Démarrer le timer à partir des minutes choisies
+        isTimerSet = true; // Activer le mouvement une fois le temps sélectionné
+    };
 });
 
 const restartButtons = document.querySelectorAll('.restart-fonction');
@@ -40,5 +61,8 @@ function restartGame() {
     const gameMessage = document.querySelector('.game-message');
     gameMessage.classList.remove('game-won', 'game-over');
     gameMessage.querySelector('p').innerText = '';
+    resetTimer();
+    isTimerSet = false; // Réinitialiser l'indicateur de sélection de temps
 }
 
+export { handleKeydown };

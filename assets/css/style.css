@@ -1,5 +1,6 @@
 body {
     overflow-y: hidden;
+    background-color: #faf8ef;
 }
 
 .container2048 {
@@ -861,6 +862,10 @@ h1.title {
     box-shadow: 0 0 5px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
     animation: bounceShadowFlame 0.6s infinite ease-in-out;
 }
+.flame-cell-selected-power {
+    box-shadow: 0 0 5px rgba(255, 69, 0, 0.8), 0 0 15px rgba(255, 140, 0, 0.8);
+    animation: bounceShadowFlame 0.6s infinite ease-in-out;
+}
 
 @keyframes bounceShadowFlame {
     0%, 100% {
@@ -981,4 +986,147 @@ h1.title {
     50% {
         box-shadow: 0 0 25px #ffcb00, 0 0 60px #655400;
     }
+}
+
+:root {
+    font-size: 62.5%; /* 1rem = 10px */
+
+    --color-primary: hsl(235, 35%, 19%);
+    --color-secondary: hsl(130, 78%, 69%);
+    --color-secondary2: hsl(358, 78%, 69%);
+    --color-font: hsla(0, 0%, 100%, 0.902);
+
+    --color-shadow: hsl(235, 36%, 35%);
+}
+
+/* ==== CONTENT ==== */
+
+.container-timer {
+    width: min(22.5rem, 100%);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-timer h1 {
+    font-size: 16px;
+    margin-bottom: 4rem;
+    color: #3c3a32;
+}
+
+.container-timer>.p-container-timer {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: red;
+}
+
+.painel p {
+    opacity: .8;
+    transition: 1s ease-in;
+}
+
+.painel p.active {
+    opacity: 1;
+    color: var(--color-secondary);
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    position: relative;
+    border: 3px solid var(--color-secondary);
+}
+
+.circle::before {
+    content: '';
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    border-radius: 50%;
+}
+
+.time {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.time p {
+    font-size: 3.6rem;
+}
+
+.time p:nth-of-type(2) {
+    position: relative;
+    top: -.5rem;
+    margin-inline: 1rem;
+}
+
+.controls {
+    margin-top: 3rem;
+}
+
+.controls button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.controls #reset {
+    display: none;
+}
+.container-btn-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+.container-btn-timer>button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #bbada0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.container-btn-timer>button:hover {
+    background-color: #8f7a66;
+}
+
+.game-list-ctn {
+    display: flex;
+}
+
+.center-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.game-mode {
+    display: none; /* Tous les modes de jeu sont masqués par défaut */
+}
+
+.active {
+    display: block; /* Afficher seulement le mode actif */
 }
