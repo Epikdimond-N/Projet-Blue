@@ -1061,6 +1061,9 @@ h1.title {
     animation: blinking 1s infinite;
     cursor: pointer;
 }
+.wind-cell-selected-power:hover {
+    box-shadow: 0 0 50px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
+}
 
 .earth-cell {
     background-image: url("../img/earth.png");

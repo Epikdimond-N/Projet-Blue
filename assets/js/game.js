@@ -1,14 +1,8 @@
 //Class du jeu
 
-import {Tiles} from "./tiles.js";
-import {
-    getPositionValueCells,
-    getRandomEmptyCells,
-    getRandomStartNumber,
-    getRandomStartNumberReverse,
-    addCell,
-} from "./utils.js";
-import {getBestScore} from "./main.js";
+import {Tiles} from "./tiles.js"
+import {getRandomEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell} from "./utils.js";
+import {getBestScore, updateBestScore} from "./main.js";
 
 export class Game {
 
@@ -451,6 +445,7 @@ export class Game {
                 }
             }
         }
+
         return true;
     }
 }

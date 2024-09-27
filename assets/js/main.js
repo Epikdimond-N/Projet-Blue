@@ -42,7 +42,7 @@ function handleKeydown(e) {
 
     if (game.Mode === "chrono") commenceTimer(); // Démarrer le timer au premier mouvement
 
-    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)> game.Score) updateBestScore(game.Score, game.Mode);
+    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)< game.Score) updateBestScore(game.Score, game.Mode);
 
 
     // Vérification de la victoire ou de la défaite
@@ -93,6 +93,7 @@ function restartGame() {
     gameMessage.classList.remove('game-won', 'game-over');
     gameMessage.querySelector('p').innerText = '';
     resetTimer();
+    document.querySelector(".score-container2048").innerHTML = "0";
     isTimerSet = false;
     rem = true
 }
@@ -246,12 +247,10 @@ function allUnique(arr) {
 
 function updateBestScore(newScore, mode) {
     localStorage.setItem(mode, newScore)
-    console.log(mode + " : " + newScore)
 }
 
 function getBestScore(move) {
     let bestScore = localStorage.getItem(move);
-    console.log("bestScore : ",bestScore)
     return bestScore ? parseInt(bestScore) : 0;
 }
 
