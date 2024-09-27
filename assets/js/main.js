@@ -20,6 +20,7 @@ function handleKeydown(e) {
     if (!isTimerSet && game.Mode === "chrono") return;
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
 
+
     lstTilesEvenListeners = [];
     switch (e.key) {
         case 'ArrowLeft':
@@ -69,6 +70,8 @@ function handleKeydown(e) {
             tile.addEventListener("click", assignNeighboringTiles)
         }
     })
+    document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
+
 }
 
 // Gestion des clics sur les boutons pour le timer
@@ -132,12 +135,22 @@ function assignNeighboringTiles(e) {
     if (parent.classList.contains('wind-cell')) {
         let sameCells = getPositionValueCells(game.Grid, game.Grid[y][x].value )
         sameCells.forEach((cell) => {
-            if (cell.x !== y || cell.y !== x) document.querySelector(`.tile-position-${cell.y + 1}-${cell.x + 1}`).classList.add('wind-cell-selected-power');
+            if (cell.x !== y || cell.y !== x) {
+                document.querySelector(`.tile-position-${cell.y + 1}-${cell.x + 1}`).classList.add('wind-cell-selected-power');
+                document.querySelector(`.tile-position-${cell.y + 1}-${cell.x + 1}`).addEventListener("click", () => {
+                    game.Grid[y][x].UsePower(game.Grid[cell.x][cell.y])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
+                })
+            }
         })
 
         let nullCells = getPositionValueCells(game.Grid, 0)
         nullCells.forEach((cell) => {
             document.querySelector(`.tile-null-position-${cell.y + 1}-${cell.x + 1}`).classList.add('wind-cell-selected-power');
+            document.querySelector(`.tile-null-position-${cell.y + 1}-${cell.x + 1}`).addEventListener("click", () => {
+              game.Grid[y][x].UsePower(game.Grid[cell.x][cell.y])
+                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
+            })
         })
 
     }else {
@@ -220,7 +233,7 @@ function assignNeighboringTiles(e) {
     }
 }
 
-function removeAnimation(tile) {
+export function removeAnimation(tile) {
     if (tile.classList.contains("flame-cell-selected-power")) {
         tile.classList.remove("flame-cell-selected-power");
     } else if (tile.classList.contains("earth-cell-selected-power")) {

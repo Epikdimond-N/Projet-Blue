@@ -1,4 +1,4 @@
-import {lstTilesEvenListeners} from "./main.js";
+import {lstTilesEvenListeners, removeAnimation} from "./main.js";
 
 export class Tiles{
     constructor(x, y, appear = false, value = 0, type = null){
@@ -27,6 +27,8 @@ export class Tiles{
                 this.UseWind(tileSelected);
                 break;
         }
+        document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
+        document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
         lstTilesEvenListeners = [];
     }
 
@@ -79,7 +81,29 @@ export class Tiles{
     }
 
     UseWind(tileSelected){
-        [this.x, tileSelected.x] = [tileSelected.x, this.x];
-        [this.y, tileSelected.y] = [tileSelected.y, this.y];
+        console.log(tileSelected)
+        if (tileSelected.value === this.value){
+            document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`tile-${tileSelected.value}`)
+            tileSelected.value *=2
+            document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add(`tile-${tileSelected.value}`)
+            document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).innerHTML = `<div class="tile-inner">${tileSelected.value}</div>`
+            if (tileSelected.element){
+                document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`${tileSelected.element}-cell`);
+                document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add("tile");
+            }
+            tileSelected.element = null;
+        }else{
+            tileSelected.value = this.value
+            console.log(tileSelected.x, tileSelected.y)
+            document.querySelector(".tile-container2048").innerHTML += `<div class="tile tile-${tileSelected.value} tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}">
+                    <div class="tile-inner">${tileSelected.value}</div>
+            </div>`
+        }
+
+        document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).remove()
+        this.value = 0
+        this.element = null;
+
+
     }
 }
