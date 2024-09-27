@@ -1,7 +1,13 @@
 //Class du jeu
 
 import {Tiles} from "./tiles.js";
-import {getPositionEmptyCells, getRandomEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell} from "./utils.js";
+import {
+    getPositionValueCells,
+    getRandomEmptyCells,
+    getRandomStartNumber,
+    getRandomStartNumberReverse,
+    addCell,
+} from "./utils.js";
 import {getBestScore} from "./main.js";
 
 export class Game {
@@ -19,7 +25,7 @@ export class Game {
     }
 
     RandomTiles(cellNum = 1) {
-        const emptyCells = getPositionEmptyCells(this.Grid);
+        const emptyCells = getPositionValueCells(this.Grid, 0);
 
         if (emptyCells.length === 0) return;
 
@@ -445,7 +451,6 @@ export class Game {
                 }
             }
         }
-
         return true;
     }
 }

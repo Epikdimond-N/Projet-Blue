@@ -17,13 +17,13 @@ function getRandomEmptyCells(cellNum = 1, cellPositions) {
     return selectedCells;
 }
 
-function getPositionEmptyCells(grid) {
+function getPositionValueCells(grid, value) {
 
     let emptyCells = [];
 
     for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
         for (let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
-            if (grid[rowIndex][colIndex].value === 0) {
+            if (grid[rowIndex][colIndex].value === value) {
                 emptyCells = [...emptyCells, {y: colIndex, x: rowIndex}];
             }
         }
@@ -57,4 +57,4 @@ function addCell(position, num) {
     }, 100)
 }
 
-export {getRandomEmptyCells, getPositionEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell};
+export {getRandomEmptyCells, getPositionValueCells, getRandomStartNumber, getRandomStartNumberReverse, addCell};
