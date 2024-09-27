@@ -11,19 +11,14 @@ document.querySelectorAll(".tile-container2048").forEach((tile) => {
         tile.addEventListener("click", assignNeighboringTiles)
     }
 })
+if (game.Mode === "reverse"? game.Score< getBestScore("reverse"):getBestScore(game.Mode)> game.Score) updateBestScore(game.Score, game.Mode);
 document.addEventListener('keydown', handleKeydown);
 
 function handleKeydown(e) {
     // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
     if (!isTimerSet && game.Mode === "chrono") return;
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
-    //document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeEvent(tile))
-    /*
-    lstTilesEvenListeners.forEach((tile) => {
-        document.querySelector(`tile-position-${tile.x + 1}-${tile.y + 1}`).removeEventListener('click', tile.UsePower)
-    })
 
-     */
     lstTilesEvenListeners = [];
     switch (e.key) {
         case 'ArrowLeft':
@@ -45,6 +40,11 @@ function handleKeydown(e) {
     }
 
     if (game.Mode === "chrono") commenceTimer(); // Démarrer le timer au premier mouvement
+
+    console.log( game.Score)
+    console.log( getBestScore(game.Mode))
+    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)> game.Score) updateBestScore(game.Score, game.Mode);
+
 
     // Vérification de la victoire ou de la défaite
     if (game.Win !== null && rem) {
@@ -121,33 +121,33 @@ function Reverse() {
 function assignNeighboringTiles(e) {
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
 
-    const parentClass = e.target.parentElement;
-    const match = parentClass?.className.match(/tile-position-(\d+)-(\d+)/);
+    console.log(game.Grid)
+    console.log(document.querySelector('.tile-container2048'))
+
+    const parent = e.target.parentElement;
+    const match = parent?.className.match(/tile-position-(\d+)-(\d+)/);
     let x, y
     if (match) {
         x = match[1] - 1;
         y = match[2] - 1;
     }
-
-
     
     if (y >= 0 && y < 3) {
         if (game.Grid[y + 1][x].value !== 0) {
             document.querySelector(`.tile-position-${x + 1}-${y + 2}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
             document.querySelector(`.tile-position-${x + 1}-${y + 2}`).addEventListener("click",()=> {
                 game.Grid[y][x].UsePower(game.Grid[y + 1][x])
+                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
             });
 
-            if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
         } // on check le bas
         if (x >= 0 && x < 3) {
             if (game.Grid[y][x + 1].value !== 0) {
                 document.querySelector(`.tile-position-${x + 2}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x + 2}-${y + 1}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y][x + 1])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check à droite
         }
         if (x <= 3 && x > 0) {
@@ -155,9 +155,8 @@ function assignNeighboringTiles(e) {
                 document.querySelector(`.tile-position-${x}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x}-${y + 1}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y][x - 1])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check a gauche
         }
 
@@ -166,9 +165,8 @@ function assignNeighboringTiles(e) {
                 document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y - 1][x])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check le haut
         }
     }
@@ -178,18 +176,16 @@ function assignNeighboringTiles(e) {
             document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
             document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click",()=> {
                 game.Grid[y][x].UsePower(game.Grid[y - 1][x])
+                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
             });
-            if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
         } // on check le bas
         if (x >= 0 && x < 3) {
             if (game.Grid[y][x + 1].value !== 0) {
                 document.querySelector(`.tile-position-${x + 2}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x + 2}-${y + 1}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y][x + 1])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check à droite
         }
         if (x <= 3 && x > 0) {
@@ -197,9 +193,8 @@ function assignNeighboringTiles(e) {
                 document.querySelector(`.tile-position-${x}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x}-${y + 1}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y][x - 1])
+                   if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check a gauche
         }
 
@@ -208,9 +203,8 @@ function assignNeighboringTiles(e) {
                 document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
                 document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click",()=> {
                     game.Grid[y][x].UsePower(game.Grid[y - 1][x])
+                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
                 });
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-
             } // on check le haut
         }
     }
@@ -241,5 +235,16 @@ function allUnique(arr) {
     return uniqueSet.size === arr.length;
 }
 
-export {handleKeydown, restartGame, Element, Chrono, Normal, Reverse, lstTilesEvenListeners};
+function updateBestScore(newScore, mode) {
+    localStorage.setItem(mode, newScore)
+    console.log(mode + " : " + newScore)
+}
 
+function getBestScore(move) {
+    let bestScore = localStorage.getItem(move);
+    console.log("bestScore : ",bestScore)
+    return bestScore ? parseInt(bestScore) : 0;
+}
+
+
+export {handleKeydown, restartGame, Element, Chrono, Normal, Reverse, getBestScore, updateBestScore ,lstTilesEvenListeners};

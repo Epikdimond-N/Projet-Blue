@@ -1,6 +1,8 @@
 //Class du jeu
 
 import {Tiles} from "./tiles.js";
+import {getPositionEmptyCells, getRandomEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell} from "./utils.js";
+import {getBestScore} from "./main.js";
 
 export class Game {
 
@@ -77,7 +79,6 @@ export class Game {
         if (this.checkLoss()) this.Win = false;
         if (this.checkWin()) this.Win = true;
 
-        return moved
     }
 
     moveUp() {
@@ -132,7 +133,8 @@ export class Game {
                         else this.Score += newValue;
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
-                        document.querySelector(".best-container2048").innerText = `${this.Score}`;
+                        console.log(getBestScore(this.Mode))
+                        document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
 
                         check = true;
 
@@ -213,7 +215,8 @@ export class Game {
                         else this.Score += newValue;
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
-                        document.querySelector(".best-container2048").innerText = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
+                        console.log(getBestScore(this.Mode))
 
 
                         tile.remove();
@@ -292,7 +295,9 @@ export class Game {
                         else this.Score += newValue;
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
-                        document.querySelector(".best-container2048").innerText = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
+                        console.log(getBestScore(this.Mode))
+
 
                         tile.remove();
                         if (this.Grid[rowIndex][curNumInLine + 1].element) {
@@ -370,7 +375,9 @@ export class Game {
                         else this.Score += newValue;
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
-                        document.querySelector(".best-container2048").innerText = `${this.Score}`;
+                        document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
+                        console.log(getBestScore(this.Mode))
+
 
                         tile.remove();
                         if (this.Grid[rowIndex][curNumInLine - 1].element) {
@@ -441,62 +448,4 @@ export class Game {
 
         return true;
     }
-}
-
-function getRandomEmptyCells(cellNum = 1, cellPositions) {
-    let selectedIndexCells = [];
-    let selectedCells = [];
-
-    while (selectedIndexCells.length < cellNum) {
-        const rand = Math.floor(Math.random() * cellPositions.length);
-        if (!selectedIndexCells.includes(rand)) {
-            selectedIndexCells = [...selectedIndexCells, rand]
-        }
-    }
-
-    for (const indexCells of selectedIndexCells) {
-        selectedCells = [...selectedCells, cellPositions[indexCells]];
-    }
-
-    return selectedCells;
-}
-
-function getPositionEmptyCells(grid) {
-
-    let emptyCells = [];
-
-    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
-        for (let colIndex = 0; colIndex < grid[rowIndex].length; colIndex++) {
-            if (grid[rowIndex][colIndex].value === 0) {
-                emptyCells = [...emptyCells, {y: colIndex, x: rowIndex}];
-            }
-        }
-    }
-
-    return emptyCells;
-}
-
-function getRandomStartNumber() {
-    const possibilities = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4];
-    const rand = Math.floor(Math.random() * possibilities.length);
-
-    return possibilities[rand];
-}
-
-function getRandomStartNumberReverse() {
-    const possibilities = [131072, 131072, 131072, 131072, 131072, 131072, 131072, 131072, 131072, 65536];
-    const rand = Math.floor(Math.random() * possibilities.length);
-
-    return possibilities[rand];
-}
-
-function addCell(position, num) {
-    const divEl = document.createElement("div");
-    divEl.classList.add('tile', `tile-${num}`, 'tile-new', `tile-position-${position.y + 1}-${position.x + 1}`);
-    divEl.innerHTML = `<div class="tile-inner">${num}</div>`;
-    document.querySelector('.tile-container2048').append(divEl);
-
-    setTimeout(() => {
-        divEl.classList.remove('tile-new');
-    }, 100)
 }

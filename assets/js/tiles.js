@@ -27,7 +27,7 @@ export class Tiles{
                 this.UseWind(tileSelected);
                 break;
         }
-
+        lstTilesEvenListeners = [];
     }
 
     UseFire(tileSelected){
