@@ -48,8 +48,8 @@ function handleKeydown(e) {
     // Vérification de la victoire ou de la défaite
     if (game.Win !== null && (rem || game.Win === false)) {
         rem = false
-        document.querySelector('.game-message').classList.add(game.Win ? 'game-won' : 'game-over');
-        document.querySelector('.game-message').querySelector('p').innerText = game.Win ? 'Vous avez gagné !' : 'Jeu terminé !';
+        document.querySelector('.game-message').classList.add(game.checkLoss() ? 'game-over' :'game-won');
+        document.querySelector('.game-message').querySelector('p').innerText = game.checkLoss() ? 'Jeu terminé !' :'Vous avez gagné !' ;
     }
 
     if (document.querySelector('.game-message').classList.contains('game-won')) {

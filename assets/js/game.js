@@ -414,7 +414,7 @@ export class Game {
             for (let col = 0; col < this.Grid[row].length; col++) {
                 if (this.Mode === "reverse" && this.Grid[row][col].value === 256) {
                     return true;
-                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2408){
+                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2048){
                     return true;
                 }
             }
