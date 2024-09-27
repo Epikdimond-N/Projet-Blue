@@ -2,7 +2,7 @@
 
 import {Tiles} from "./tiles.js";
 import {getPositionEmptyCells, getRandomEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell} from "./utils.js";
-import {getBestScore} from "./main.js";
+import {getBestScore, updateBestScore} from "./main.js";
 
 export class Game {
 
@@ -131,6 +131,7 @@ export class Game {
 
                         if (this.Mode === "reverse") this.Score -= newValue;
                         else this.Score += newValue;
+                        updateBestScore(this.Mode, this.Score);
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         console.log(getBestScore(this.Mode))
@@ -213,6 +214,7 @@ export class Game {
                         check = true;
                         if (this.Mode === "reverse") this.Score -= newValue;
                         else this.Score += newValue;
+                        updateBestScore(this.Mode, this.Score);
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
@@ -293,6 +295,7 @@ export class Game {
                         check = true;
                         if (this.Mode === "reverse") this.Score -= newValue;
                         else this.Score += newValue;
+                        updateBestScore(this.Mode, this.Score);
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
@@ -373,11 +376,10 @@ export class Game {
                         check = true;
                         if (this.Mode === "reverse") this.Score -= newValue;
                         else this.Score += newValue;
+                        updateBestScore(this.Mode, this.Score);
 
                         document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
-                        console.log(getBestScore(this.Mode))
-
 
                         tile.remove();
                         if (this.Grid[rowIndex][curNumInLine - 1].element) {

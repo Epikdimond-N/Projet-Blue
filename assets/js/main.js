@@ -43,7 +43,7 @@ function handleKeydown(e) {
 
     console.log( game.Score)
     console.log( getBestScore(game.Mode))
-    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)> game.Score) updateBestScore(game.Score, game.Mode);
+    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)< game.Score) updateBestScore(game.Score, game.Mode);
 
 
     // Vérification de la victoire ou de la défaite
@@ -94,6 +94,7 @@ function restartGame() {
     gameMessage.classList.remove('game-won', 'game-over');
     gameMessage.querySelector('p').innerText = '';
     resetTimer();
+    document.querySelector(".score-container2048").innerHTML = "0";
     isTimerSet = false;
     rem = true
 }
@@ -131,7 +132,7 @@ function assignNeighboringTiles(e) {
         x = match[1] - 1;
         y = match[2] - 1;
     }
-    
+
     if (y >= 0 && y < 3) {
         if (game.Grid[y + 1][x].value !== 0) {
             document.querySelector(`.tile-position-${x + 1}-${y + 2}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
@@ -236,12 +237,14 @@ function allUnique(arr) {
 }
 
 function updateBestScore(newScore, mode) {
+    console.log("modecaca : ",mode)
     localStorage.setItem(mode, newScore)
     console.log(mode + " : " + newScore)
 }
 
-function getBestScore(move) {
-    let bestScore = localStorage.getItem(move);
+function getBestScore(mode) {
+    console.log("mode : ",mode)
+    let bestScore = localStorage.getItem(mode);
     console.log("bestScore : ",bestScore)
     return bestScore ? parseInt(bestScore) : 0;
 }
