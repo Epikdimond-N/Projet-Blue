@@ -34,11 +34,11 @@ document.querySelectorAll('.container-btn-timer button').forEach(button => {
 document.querySelectorAll('.restart-fonction').forEach(button => button.onclick = restartGame);
 
 function handleKeydown(e) {
-    // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
+    // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées).
     if (!isTimerSet && game.Mode === "chrono") return;
     //Enlève les animations des tiles et des cellules
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
-    //reset a chaque keydown
+
     TilesEvenListeners = null;
     switch (e.key) {
         case 'ArrowLeft':
@@ -103,6 +103,7 @@ function restartGame() {
     document.querySelector(".score-container2048").innerHTML = "0";
     isTimerSet = false;
     rem = true
+    document.querySelector(".best-container2048").innerText = `${getBestScore(game.Mode)}`
 }
 
 function assignNeighboringTiles(e) {
@@ -118,6 +119,8 @@ function assignNeighboringTiles(e) {
         x = match[1] - 1;
         y = match[2] - 1;
     }
+
+    parent.classList.add(game.Grid[y][x].element+'-cell-selected');
 
     if (parent.classList.contains('wind-cell')) {
         let nullCells = getPositionValueCells(game.Grid, 0); // Obtient les positions des tiles vides
@@ -178,38 +181,37 @@ export function removeAnimation(tile) {
     });
 }
 
-function allUnique(arr) {
-    const uniqueSet = new Set(arr);
-    return uniqueSet.size === arr.length;
-}
-
 function updateBestScore(newScore, mode) {
     localStorage.setItem(mode, newScore)
 }
 
-function getBestScore(move) {
-    let bestScore = localStorage.getItem(move);
-    return bestScore ? parseInt(bestScore) : 0;
+function getBestScore(mode) {
+    let bestScore = localStorage.getItem(mode);
+    return bestScore ? parseInt(bestScore) : mode !== "reverse" ? 0 : 11453246120;
 }
 
 function Element() {
     game = new Game("element", 4);
     rem = true
+    document.querySelector(".best-container2048").innerText = `${getBestScore(game.Mode)}`
 }
 
 function Chrono() {
     game = new Game("chrono", 4);
     rem = true
+    document.querySelector(".best-container2048").innerText = `${getBestScore(game.Mode)}`
 }
 
 function Normal() {
     game = new Game("normal", 4);
     rem = true
+    document.querySelector(".best-container2048").innerText = `${getBestScore(game.Mode)}`
 }
 
 function Reverse() {
     game = new Game("reverse", 4);
     rem = true
+    document.querySelector(".best-container2048").innerText = `${getBestScore(game.Mode)}`
 }
 
 export {
