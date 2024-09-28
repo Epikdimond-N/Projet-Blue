@@ -569,7 +569,7 @@ h1.title {
 .earth-cell.tile-128 .tile-inner,
 .flame-cell.tile-128 .tile-inner,
 .water-cell.tile-128 .tile-inner,
-.wind-cell.tile-128 .tile-inner{
+.wind-cell.tile-128 .tile-inner {
     font-size: 45px;
 }
 
@@ -606,7 +606,7 @@ h1.title {
 .earth-cell.tile-1024 .tile-inner,
 .flame-cell.tile-1024 .tile-inner,
 .water-cell.tile-1024 .tile-inner,
-.wind-cell.tile-1024 .tile-inner{
+.wind-cell.tile-1024 .tile-inner {
     font-size: 35px;
 }
 
@@ -784,6 +784,18 @@ h1.title {
     filter: alpha(opacity=80);
 }
 
+.game-list {
+    font-weight: bold;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.title-game-list {
+    font-weight: bold;
+    padding-bottom: 10px;
+    font-size: 2rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
 .game-item > img {
     width: 100px;
     height: 80px;
@@ -795,10 +807,12 @@ h1.title {
     width: 150px;
     height: 80px;
     text-align: center;
-    font-size: 25px;
+    font-size: 26px;
     vertical-align: middle;
     display: table-cell;
     padding-top: 10px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .tile-2 {
@@ -1061,6 +1075,7 @@ h1.title {
     animation: blinking 1s infinite;
     cursor: pointer;
 }
+
 .wind-cell-selected-power:hover {
     box-shadow: 0 0 50px rgba(0, 191, 255), 0 0 15px rgba(100, 255, 255);
 }
@@ -1219,6 +1234,7 @@ h1.title {
 
 .time p {
     font-size: 3.6rem;
+    color: #736f60;
 }
 
 .time p:nth-of-type(2) {
