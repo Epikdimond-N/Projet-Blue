@@ -1,13 +1,7 @@
 //Class du jeu
 
-import {Tiles} from "./tiles.js"
-import {
-    getRandomEmptyCells,
-    getRandomStartNumber,
-    getRandomStartNumberReverse,
-    addCell,
-    getPositionValueCells
-} from "./utils.js";
+import {Tiles, ElementTypes} from "./tiles.js"
+import {getRandomEmptyCells, getRandomStartNumber, getRandomStartNumberReverse, addCell, getPositionValueCells, Random} from "./utils.js";
 import {getBestScore, updateBestScore} from "./main.js";
 
 export class Game {
@@ -29,7 +23,7 @@ export class Game {
 
         if (emptyCells.length === 0) return;
 
-        const numbers = this.Mode === "reverse"? [...Array(cellNum)].map(getRandomStartNumberReverse) : [...Array(cellNum)].map(getRandomStartNumber);
+        const numbers = this.Mode === "reverse" ? [...Array(cellNum)].map(getRandomStartNumberReverse) : [...Array(cellNum)].map(getRandomStartNumber);
         const selectedCells = getRandomEmptyCells(cellNum, emptyCells)
 
         if (this.checkLoss()) this.Win = false
@@ -39,14 +33,10 @@ export class Game {
             const tile = new Tiles(cellPosition.y, cellPosition.x, true, numbers[index]);
 
             if (this.Mode === "element") {
-                if (Math.random() <= 0.02) {
-                    tile.element = "flame";
-                } else if (Math.random() <= 0.04) {
-                    tile.element = "water";
-                } else if (Math.random() <= 0.06) {
-                    tile.element = "earth";
-                } else if (Math.random() <= 0.08) {
-                    tile.element = "wind";
+                let randElement = Random(Date.now()) * 100;
+                if (randElement <= 12) {
+                    let randTypes = Math.floor(Random(Date.now()) * 1000) / 25;
+                    tile.element = ElementTypes[Math.floor(randTypes)];
                 }
             }
 
@@ -139,7 +129,7 @@ export class Game {
                         else this.Score += newValue;
                         updateBestScore(this.Mode, this.Score);
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-" : "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
 
                         check = true;
@@ -221,7 +211,7 @@ export class Game {
                         else this.Score += newValue;
                         updateBestScore(this.Mode, this.Score);
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-" : "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
 
 
@@ -301,7 +291,7 @@ export class Game {
                         else this.Score += newValue;
                         updateBestScore(this.Mode, this.Score);
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-" : "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
 
 
@@ -382,7 +372,7 @@ export class Game {
                         updateBestScore(this.Mode, this.Score);
 
 
-                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-": "+"}${newValue}</div>`
+                        document.querySelector(".score-container2048").innerHTML = `${this.Score}<div class="score-addition">${(this.Mode === "reverse") ? "-" : "+"}${newValue}</div>`
                         document.querySelector(".best-container2048").innerText = `${getBestScore(this.Mode)}`;
 
 
@@ -412,9 +402,7 @@ export class Game {
     checkWin() {
         for (let row = 0; row < this.Grid.length; row++) {
             for (let col = 0; col < this.Grid[row].length; col++) {
-                if (this.Mode === "reverse" && this.Grid[row][col].value === 256) {
-                    return true;
-                }else if (this.Mode !== "reverse" && this.Grid[row][col].value === 2048){
+                if ((this.Mode !== "reverse" && this.Grid[row][col].value === 2048) || (this.Mode === "reverse" && this.Grid[row][col].value === 256)) {
                     return true;
                 }
             }

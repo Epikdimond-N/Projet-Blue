@@ -1,27 +1,45 @@
 import {Game} from "./game.js";
 import {commenceTimer, resetTimer, startTimer} from "./timer.js";
 import {getPositionValueCells} from "./utils.js";
+import {ElementTypes} from "./tiles.js";
 
-let game = new Game();
+let game = new Game();//Initialise le jeu
 let isTimerSet = false; // Indicateur pour savoir si un temps a été sélectionné
-let lstTilesEvenListeners = []
-let rem = true
+let TilesEvenListeners = null // Tiles qui active son pouvoir
+let rem = true // Indicateur pour savoir si le jeu a été redémarré
 
+document.addEventListener('keydown', handleKeydown);//Ajoute l'event keydown pour les touches fléchées
+
+//Assigne aux tiles avec pouvoir l'event click au début de partie
 document.querySelectorAll(".tile-container2048").forEach((tile) => {
     if (!tile.classList.contains('tile')) {
         tile.addEventListener("click", assignNeighboringTiles)
     }
 })
-if (game.Mode === "reverse"? game.Score< getBestScore("reverse"):getBestScore(game.Mode)> game.Score) updateBestScore(game.Score, game.Mode);
-document.addEventListener('keydown', handleKeydown);
+
+//Update le meilleur score selon le mode
+if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode) > game.Score) {
+    updateBestScore(game.Score, game.Mode);
+}
+
+//Start le timer
+document.querySelectorAll('.container-btn-timer button').forEach(button => {
+    button.onclick = function () {
+        startTimer(parseInt(this.innerText));
+        isTimerSet = true;
+    };
+});
+
+//Restart le jeu
+document.querySelectorAll('.restart-fonction').forEach(button => button.onclick = restartGame);
 
 function handleKeydown(e) {
     // Ne pas permettre de bouger tant que le timer n'est pas défini (minutes non sélectionnées)
     if (!isTimerSet && game.Mode === "chrono") return;
+    //Enlève les animations des tiles et des cellules
     document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
-
-
-    lstTilesEvenListeners = [];
+    //reset a chaque keydown
+    TilesEvenListeners = null;
     switch (e.key) {
         case 'ArrowLeft':
             game.move('left');
@@ -40,54 +58,40 @@ function handleKeydown(e) {
             restartGame();
             return;
     }
-
+    //Chrono mode commence après le premier mouvement
     if (game.Mode === "chrono") commenceTimer(); // Démarrer le timer au premier mouvement
-
-    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode)< game.Score) updateBestScore(game.Score, game.Mode);
+    //Update le score
+    if (game.Mode === "reverse" ? game.Score < getBestScore("reverse") : getBestScore(game.Mode) < game.Score) updateBestScore(game.Score, game.Mode);
 
 
     // Vérification de la victoire ou de la défaite
     if (game.Win !== null && (rem || game.Win === false)) {
         rem = false
-        document.querySelector('.game-message').classList.add(game.checkLoss() ? 'game-over' :'game-won');
-        document.querySelector('.game-message').querySelector('p').innerText = game.checkLoss() ? 'Jeu terminé !' :'Vous avez gagné !' ;
+        document.querySelector('.game-message').classList.add(game.checkLoss() ? 'game-over' : 'game-won');
+        document.querySelector('.game-message').querySelector('p').innerText = game.checkLoss() ? 'Jeu terminé !' : 'Vous avez gagné !';
+        if (game.Win) {
+            document.removeEventListener('keydown', handleKeydown);
+        }
     }
 
-    if (document.querySelector('.game-message').classList.contains('game-won')) {
-        document.removeEventListener('keydown', handleKeydown);
-    }
-    const continueBtn = document.querySelector('.keep-playing-button');
-    const gameMessage = document.querySelector('.game-message');
-
-    continueBtn.addEventListener('click', () => {
+    //Continue le jeu après la victoire
+    document.querySelector('.keep-playing-button').addEventListener('click', () => {
         document.addEventListener('keydown', handleKeydown);
-        gameMessage.classList.remove('game-won');
+        document.querySelector('.game-message').classList.remove('game-won');
         game.Win = null;
     });
 
-    document.querySelector(".tile-container2048").querySelectorAll("div").forEach((tile) => {
+    //Affichage des tiles qui peuvent subir un pouvoir
+    document.querySelector(".tile-container2048").addEventListener("click", (ev) => {
+        const tile = ev.target;
         if (!tile.classList.contains('tile') && !tile.classList.contains('tile-inner')) {
-            tile.addEventListener("click", assignNeighboringTiles)
+            assignNeighboringTiles.call(tile);
         }
-    })
+    });
+
+    document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
     document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
-
 }
-
-// Gestion des clics sur les boutons pour le timer
-document.querySelectorAll('.container-btn-timer button').forEach(button => {
-    button.onclick = function () {
-        const minutes = parseInt(this.innerText); // Récupérer les minutes à partir du texte du bouton
-        startTimer(minutes); // Démarrer le timer à partir des minutes choisies
-        isTimerSet = true; // Activer le mouvement une fois le temps sélectionné
-    };
-});
-
-const restartButtons = document.querySelectorAll('.restart-fonction');
-
-restartButtons.forEach(button => {
-    button.onclick = restartGame;
-});
 
 function restartGame() {
     document.querySelector(".tile-container2048").innerHTML = "";
@@ -99,6 +103,93 @@ function restartGame() {
     document.querySelector(".score-container2048").innerHTML = "0";
     isTimerSet = false;
     rem = true
+}
+
+function assignNeighboringTiles(e) {
+    document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
+    document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
+    const parent = e.target.classList.contains('tile-inner') ? e.target.parentElement : e.target;
+
+    if (!parent || (parent.classList.contains('tile') && parent.classList.contains('tile-inner'))) return;
+
+    const match = parent?.className.match(/tile-position-(\d+)-(\d+)/);
+    let x, y
+    if (match) {
+        x = match[1] - 1;
+        y = match[2] - 1;
+    }
+
+    if (parent.classList.contains('wind-cell')) {
+        let nullCells = getPositionValueCells(game.Grid, 0); // Obtient les positions des tiles vides
+        handleCellSelection(nullCells, y, x, 'null-');
+
+        let sameCells = getPositionValueCells(game.Grid, game.Grid[y][x].value);//Obtient les positions des tiles avec la même valeur que celle cliqué
+        handleCellSelection(sameCells, y, x);
+    } else {
+        // Vérifier en bas
+        if (y < 3) {
+            handleNeighboringTile(x, y + 1, x, y);
+        }
+        // Vérifier à droite
+        if (x < 3) {
+            handleNeighboringTile(x + 1, y, x, y);
+        }
+        // Vérifier à gauche
+        if (x > 0) {
+            handleNeighboringTile(x - 1, y, x, y);
+        }
+        // Vérifier en haut
+        if (y > 0) {
+            handleNeighboringTile(x, y - 1, x, y);
+        }
+    }
+}
+
+function handleClick(targetX, targetY, sourceX, sourceY) {
+    return function () {
+        TilesEvenListeners = game.Grid[sourceY][sourceX];
+        game.Grid[sourceY][sourceX].UsePower(game.Grid[targetY][targetX]);
+    };
+}
+
+function handleNeighboringTile(targetX, targetY, sourceX, sourceY) {
+    const clickHandler = handleClick(targetX, targetY, sourceX, sourceY);
+    if (game.Grid[targetY][targetX].value !== 0) {
+        document.querySelector(`.tile-position-${targetX + 1}-${targetY + 1}`).classList.add(game.Grid[sourceY][sourceX].element + '-cell-selected-power');
+        document.querySelector(`.tile-position-${targetX + 1}-${targetY + 1}`).addEventListener("click", clickHandler);
+    }
+}
+
+function handleCellSelection(cells, y, x, classNamePrefix = '') {
+    cells.forEach((cell) => {
+        if (!(cell.x === y && cell.y === x)) {
+            const clickHandler = handleClick(cell.y, cell.x, x, y);
+            const tileElement = document.querySelector(`.tile-${classNamePrefix}position-${cell.y + 1}-${cell.x + 1}`);
+            tileElement.classList.add(`wind-cell-selected-power`);
+            tileElement.addEventListener("click", clickHandler);
+        }
+    });
+}
+
+export function removeAnimation(tile) {
+    ElementTypes.forEach(element => {
+        tile.classList.remove(`${element}-cell-selected-power`);
+        tile.classList.remove(`${element}-cell-selected`);
+    });
+}
+
+function allUnique(arr) {
+    const uniqueSet = new Set(arr);
+    return uniqueSet.size === arr.length;
+}
+
+function updateBestScore(newScore, mode) {
+    localStorage.setItem(mode, newScore)
+}
+
+function getBestScore(move) {
+    let bestScore = localStorage.getItem(move);
+    return bestScore ? parseInt(bestScore) : 0;
 }
 
 function Element() {
@@ -121,151 +212,14 @@ function Reverse() {
     rem = true
 }
 
-function assignNeighboringTiles(e) {
-    document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
-    document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
-    const parent = e.target.parentElement;
-    const match = parent?.className.match(/tile-position-(\d+)-(\d+)/);
-    let x, y
-    if (match) {
-        x = match[1] - 1;
-        y = match[2] - 1;
-    }
-
-    if (parent.classList.contains('wind-cell')) {
-        let sameCells = getPositionValueCells(game.Grid, game.Grid[y][x].value )
-        sameCells.forEach((cell) => {
-            if (cell.x !== y || cell.y !== x) {
-                document.querySelector(`.tile-position-${cell.y + 1}-${cell.x + 1}`).classList.add('wind-cell-selected-power');
-                document.querySelector(`.tile-position-${cell.y + 1}-${cell.x + 1}`).addEventListener("click", () => {
-                    game.Grid[y][x].UsePower(game.Grid[cell.x][cell.y])
-                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                })
-            }
-        })
-
-        let nullCells = getPositionValueCells(game.Grid, 0)
-        nullCells.forEach((cell) => {
-            document.querySelector(`.tile-null-position-${cell.y + 1}-${cell.x + 1}`).classList.add('wind-cell-selected-power');
-            document.querySelector(`.tile-null-position-${cell.y + 1}-${cell.x + 1}`).addEventListener("click", () => {
-              game.Grid[y][x].UsePower(game.Grid[cell.x][cell.y])
-                if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-            })
-        })
-
-    }else {
-        if (y >= 0 && y < 3) {
-            if (game.Grid[y + 1][x].value !== 0) {
-                document.querySelector(`.tile-position-${x + 1}-${y + 2}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                document.querySelector(`.tile-position-${x + 1}-${y + 2}`).addEventListener("click", () => {
-                    game.Grid[y][x].UsePower(game.Grid[y + 1][x])
-                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                });
-
-            } // on check le bas
-            if (x >= 0 && x < 3) {
-                if (game.Grid[y][x + 1].value !== 0) {
-                    document.querySelector(`.tile-position-${x + 2}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x + 2}-${y + 1}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y][x + 1])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check à droite
-            }
-            if (x <= 3 && x > 0) {
-                if (game.Grid[y][x - 1].value !== 0) {
-                    document.querySelector(`.tile-position-${x}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x}-${y + 1}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y][x - 1])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check a gauche
-            }
-
-            if (y > 0 && y <= 3) {
-                if (game.Grid[y - 1][x].value !== 0) {
-                    document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y - 1][x])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check le haut
-            }
-        }
-
-        if (y <= 3 && y > 0) {
-            if (game.Grid[y - 1][x].value !== 0) {
-                document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click", () => {
-                    game.Grid[y][x].UsePower(game.Grid[y - 1][x])
-                    if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                });
-            } // on check le bas
-            if (x >= 0 && x < 3) {
-                if (game.Grid[y][x + 1].value !== 0) {
-                    document.querySelector(`.tile-position-${x + 2}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x + 2}-${y + 1}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y][x + 1])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check à droite
-            }
-            if (x <= 3 && x > 0) {
-                if (game.Grid[y][x - 1].value !== 0) {
-                    document.querySelector(`.tile-position-${x}-${y + 1}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x}-${y + 1}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y][x - 1])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check a gauche
-            }
-
-            if (y > 0 && y <= 3) {
-                if (game.Grid[y - 1][x].value !== 0) {
-                    document.querySelector(`.tile-position-${x + 1}-${y}`).classList.add(game.Grid[y][x].element + '-cell-selected-power');
-                    document.querySelector(`.tile-position-${x + 1}-${y}`).addEventListener("click", () => {
-                        game.Grid[y][x].UsePower(game.Grid[y - 1][x])
-                        if (allUnique(lstTilesEvenListeners)) lstTilesEvenListeners.push(game.Grid[y][x])
-                    });
-                } // on check le haut
-            }
-        }
-    }
-}
-
-export function removeAnimation(tile) {
-    if (tile.classList.contains("flame-cell-selected-power")) {
-        tile.classList.remove("flame-cell-selected-power");
-    } else if (tile.classList.contains("earth-cell-selected-power")) {
-        tile.classList.remove("earth-cell-selected-power");
-    } else if (tile.classList.contains("wind-cell-selected-power")) {
-        tile.classList.remove("wind-cell-selected-power");
-    } else if (tile.classList.contains("water-cell-selected-power")) {
-        tile.classList.remove("water-cell-selected-power");
-    } else if (tile.classList.contains("flame-cell-selected")) {
-        tile.classList.remove("flame-cell-selected");
-    } else if (tile.classList.contains("earth-cell-selected")) {
-        tile.classList.remove("earth-cell-selected");
-    } else if (tile.classList.contains("wind-cell-selected")) {
-        tile.classList.remove("wind-cell-selected");
-    } else if (tile.classList.contains("water-cell-selected")) {
-        tile.classList.remove("water-cell-selected");
-    }
-}
-
-function allUnique(arr) {
-    const uniqueSet = new Set(arr);
-    return uniqueSet.size === arr.length;
-}
-
-function updateBestScore(newScore, mode) {
-    localStorage.setItem(mode, newScore)
-}
-
-function getBestScore(move) {
-    let bestScore = localStorage.getItem(move);
-    return bestScore ? parseInt(bestScore) : 0;
-}
-
-
-export {handleKeydown, restartGame, Element, Chrono, Normal, Reverse, getBestScore, updateBestScore ,lstTilesEvenListeners};
+export {
+    handleKeydown,
+    restartGame,
+    Element,
+    Chrono,
+    Normal,
+    Reverse,
+    getBestScore,
+    updateBestScore,
+    TilesEvenListeners
+};

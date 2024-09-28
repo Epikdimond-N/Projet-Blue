@@ -1,19 +1,19 @@
-import {lstTilesEvenListeners, removeAnimation} from "./main.js";
+import {TilesEvenListeners, removeAnimation} from "./main.js";
 
-export class Tiles{
-    constructor(x, y, appear = false, value = 0, type = null){
-        this.element = type;
+export class Tiles {
+    constructor(x, y, appear = false, value = 0, type = null) {
+        if (!type && ElementTypes.includes(type)) this.element = type;
+        else this.element = null;
         this.value = value
         this.new = appear
         this.x = x
         this.y = y
     }
 
-    UsePower(tileSelected = null ){
-       if (!lstTilesEvenListeners.includes(this)) return
+    UsePower(tileSelected) {
+        if ((TilesEvenListeners?.x !== this.x || TilesEvenListeners?.y !== this.y) || !this.value || !this.element) return
 
-
-        switch(this.element){
+        switch (this.element) {
             case "flame":
                 this.UseFire(tileSelected);
                 break;
@@ -29,10 +29,9 @@ export class Tiles{
         }
         document.querySelectorAll('.grid-cell').forEach((cell) => removeAnimation(cell))
         document.querySelector('.tile-container2048').querySelectorAll("div").forEach((tile) => removeAnimation(tile))
-        lstTilesEvenListeners = [];
     }
 
-    UseFire(tileSelected){
+    UseFire(tileSelected) {
         tileSelected.value = 0
         tileSelected.element = null
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).remove();
@@ -41,7 +40,7 @@ export class Tiles{
         this.element = null
     }
 
-    UseWater(tileSelected){
+    UseWater(tileSelected) {
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`tile-${tileSelected.value}`)
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add(`tile-${this.value}`)
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).innerHTML = `<div class="tile-inner">${this.value}</div>`
@@ -53,7 +52,7 @@ export class Tiles{
         document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.remove(`${this.element}-cell`);
         document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.add("tile");
 
-        if (tileSelected.element){
+        if (tileSelected.element) {
             document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.add(`${tileSelected.element}-cell`);
             document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.remove(`tile`)
         }
@@ -67,7 +66,7 @@ export class Tiles{
         tileSelected.element = null;
     }
 
-    UseEarth(tileSelected){
+    UseEarth(tileSelected) {
         tileSelected.value *= 2
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`tile-${tileSelected.value / 2}`)
         document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add(`tile-${tileSelected.value}`)
@@ -76,25 +75,21 @@ export class Tiles{
         document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.remove(`${this.element}-cell`);
         document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).classList.add("tile");
         this.element = null
-
-
     }
 
-    UseWind(tileSelected){
-        console.log(tileSelected)
-        if (tileSelected.value === this.value){
+    UseWind(tileSelected) {
+        if (tileSelected.value === this.value) {
             document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`tile-${tileSelected.value}`)
-            tileSelected.value *=2
+            tileSelected.value *= 2
             document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add(`tile-${tileSelected.value}`)
             document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).innerHTML = `<div class="tile-inner">${tileSelected.value}</div>`
-            if (tileSelected.element){
+            if (tileSelected.element) {
                 document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.remove(`${tileSelected.element}-cell`);
                 document.querySelector(`.tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}`).classList.add("tile");
             }
             tileSelected.element = null;
-        }else{
+        } else {
             tileSelected.value = this.value
-            console.log(tileSelected.x, tileSelected.y)
             document.querySelector(".tile-container2048").innerHTML += `<div class="tile tile-${tileSelected.value} tile-position-${tileSelected.x + 1}-${tileSelected.y + 1}">
                     <div class="tile-inner">${tileSelected.value}</div>
             </div>`
@@ -103,7 +98,7 @@ export class Tiles{
         document.querySelector(`.tile-position-${this.x + 1}-${this.y + 1}`).remove()
         this.value = 0
         this.element = null;
-
-
     }
 }
+
+export let ElementTypes = ['flame', 'earth', 'wind', 'water'];
